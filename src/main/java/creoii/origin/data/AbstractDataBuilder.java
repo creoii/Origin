@@ -52,12 +52,11 @@ public abstract class AbstractDataBuilder<T extends DataObject> {
         return stream;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public Map<String, T> getValues() {
-        return values;
+    public T getObject(String id) {
+        for (String s : values.keySet()) {
+            if (s.equals(id)) return values.get(s);
+        }
+        return null;
     }
 
     public boolean isLoaded() {

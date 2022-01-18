@@ -1,0 +1,12 @@
+{
+  "id": "wizard",
+  "weapon_type": "staff",
+  "ability_type": "spell",
+  "armor_type": "armor",
+  "base_stats": {
+  },
+  "min_stat_increase": {
+  },
+  "max_stat_increase": {
+  }
+}

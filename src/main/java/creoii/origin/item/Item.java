@@ -76,6 +76,7 @@ public class Item implements DataObject {
         WAND(0),
         BOW(0),
         DAGGER(0),
+        KATANA(0),
         HELM(1),
         SHIELD(1),
         SPEAR(1),

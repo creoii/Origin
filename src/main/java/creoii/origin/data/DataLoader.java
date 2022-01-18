@@ -5,11 +5,13 @@ import java.util.List;
 
 public class DataLoader {
     public static final List<AbstractDataBuilder<?>> BUILDERS = new ArrayList<>();
+    public static final ItemBuilder ITEMS = new ItemBuilder();
+    public static final ClassBuilder CLASSES = new ClassBuilder();
     private boolean complete = true;
 
     public DataLoader() {
-        ItemBuilder itemBuilder = new ItemBuilder();
-        if (!itemBuilder.isLoaded()) complete = false;
+        if (!ITEMS.isLoaded()) complete = false;
+        if (!CLASSES.isLoaded()) complete = false;
     }
 
     public boolean isComplete() {

@@ -1,0 +1,12 @@
+{
+  "id": "ninja",
+  "weapon_type": "katana",
+  "ability_type": "star",
+  "armor_type": "armor",
+  "base_stats": {
+  },
+  "min_stat_increase": {
+  },
+  "max_stat_increase": {
+  }
+}
