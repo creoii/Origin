@@ -1,0 +1,9 @@
+{
+  "id": "twilight",
+  "type": "wand",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "health_regen": 8,
+    "attack": 5
+  }
+}

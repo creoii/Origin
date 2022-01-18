@@ -1,0 +1,9 @@
+{
+  "id": "dirk_of_malaath",
+  "type": "dagger",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "attack": 4,
+    "armor": 2
+  }
+}
