@@ -1,5 +1,6 @@
 package creoii.origin.data.objects;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import creoii.origin.core.util.JsonUtil;
 
@@ -19,17 +20,36 @@ public class JsonObjects {
                 return new StatData(maxHealth, maxMana, speed, attackSpeed, healthRegen, manaRegen, attack, armor);
             } return new StatData(0, 0, 0, 0, 0, 0, 0, 0);
         }
+
+        public static JsonElement serialize(StatData src) {
+            JsonObject object = new JsonObject();
+            object.addProperty("max_health", src.maxHealth());
+            object.addProperty("max_mana", src.maxMana());
+            object.addProperty("speed", src.speed());
+            object.addProperty("attack_speed", src.attackSpeed());
+            object.addProperty("health_regen", src.healthRegen());
+            object.addProperty("mana_regen", src.manaRegen());
+            object.addProperty("attack", src.attack());
+            object.addProperty("armor", src.armor());
+            return object;
+        }
     }
 
-    public record PositionData(float x, float y, float z) {
+    public record PositionData(float x, float y) {
         public static PositionData deserialize(JsonObject object, String name) {
             if (object.has(name)) {
                 JsonObject object1 = object.getAsJsonObject(name);
                 float x = JsonUtil.getFloat(object1, "x", 0f);
                 float y = JsonUtil.getFloat(object1, "y", 0f);
-                float z = JsonUtil.getFloat(object1, "z", 0f);
-                return new PositionData(x, y, z);
-            } return new PositionData(0f, 0f, 0f);
+                return new PositionData(x, y);
+            } return new PositionData(0f, 0f);
+        }
+
+        public static JsonElement serialize(PositionData positionData) {
+            JsonObject object = new JsonObject();
+            object.addProperty("x", positionData.x());
+            object.addProperty("y", positionData.y());
+            return object;
         }
     }
 }

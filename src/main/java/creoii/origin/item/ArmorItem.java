@@ -29,13 +29,13 @@ public class ArmorItem extends Item implements EquippableItem {
     }
 
     public static JsonElement serialize(Item item, JsonSerializationContext context) {
-        if (item instanceof ArmorItem weapon) {
+        if (item instanceof ArmorItem armor) {
             JsonObject object = new JsonObject();
-            object.addProperty("id", item.getId());
-            object.addProperty("type", item.getType().name().toLowerCase());
-            object.addProperty("rarity", item.getRarity().name().toLowerCase());
-            object.add("stat_bonus", context.serialize(weapon.getStatBonus()));
+            object.addProperty("id", armor.getId());
+            object.addProperty("type", armor.getType().name().toLowerCase());
+            object.addProperty("rarity", armor.getRarity().name().toLowerCase());
+            object.add("stat_bonus", JsonObjects.StatData.serialize(armor.getStatBonus()));
             return object;
-        } throw new JsonSyntaxException("Unable to serialize non-weapon item.");
+        } throw new JsonSyntaxException("Unable to serialize non-armor item.");
     }
 }

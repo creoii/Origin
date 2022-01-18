@@ -111,9 +111,9 @@ public class Item implements DataObject {
                 case ARMOR_ID -> ArmorItem::deserialize;
                 case ACCESSORY_ID -> AccessoryItem::deserialize;
                 case SIGIL_ID -> SigilItem::deserialize;
-                case CONSUMABLE_ID -> WeaponItem::deserialize;
-                case TOKEN_ID -> WeaponItem::deserialize;
-                default -> WeaponItem::deserialize;
+                case CONSUMABLE_ID -> ConsumableItem::deserialize;
+                case TOKEN_ID -> TokenItem::deserialize;
+                default -> throw new IllegalStateException("Unknown item type id: ".concat(String.valueOf(id)));
             };
         }
     }
