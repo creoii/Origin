@@ -42,12 +42,10 @@ public abstract class AbstractDataBuilder<T extends DataObject> {
         }
     }
 
-    private InputStream getFileAsStream(final String path) {
+    private InputStream getFileAsStream(String path) throws IOException {
         InputStream stream = Main.class.getClassLoader().getResourceAsStream(path);
         if (stream == null) {
-            // create directory here
-            Main.LOGGER.severe("Unable to find or create " + path);
-            return null;
+            Main.LOGGER.info("Failed to find or create directory ".concat(path));
         }
         return stream;
     }
@@ -57,6 +55,10 @@ public abstract class AbstractDataBuilder<T extends DataObject> {
             if (s.equals(id)) return values.get(s);
         }
         return null;
+    }
+
+    public Map<String, T> getValues() {
+        return values;
     }
 
     public boolean isLoaded() {

@@ -1,9 +1,14 @@
 package creoii.origin.core.display;
 
+import creoii.origin.core.display.scene.AbstractScene;
+import creoii.origin.core.display.scene.TitleScene;
+import creoii.origin.core.display.scene.WorldScene;
 import creoii.origin.core.input.KeyListener;
 import creoii.origin.core.input.MouseListener;
+import creoii.origin.data.DataLoader;
+import creoii.origin.item.EquippableItem;
+import creoii.origin.item.Item;
 import org.lwjgl.glfw.Callbacks;
-import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -13,12 +18,16 @@ import org.lwjgl.system.MemoryUtil;
 
 import java.nio.IntBuffer;
 
+import static org.lwjgl.glfw.GLFW.*;
+
 public class Window {
     private String title;
     private int width, height;
+    private float r = 0f, g = 0f, b = 0f, a = 1f;
     private long glfwWindow;
 
     private static Window instance;
+    private static AbstractScene currentScene = new TitleScene();
 
     public Window() {
         this.title = "Origin of Chaos";
@@ -30,60 +39,91 @@ public class Window {
         return instance == null ? new Window() : instance;
     }
 
+    public void changeScene(int sceneId) {
+        switch (sceneId) {
+            case 0 -> currentScene = new TitleScene();
+            case 1 -> currentScene = new WorldScene();
+            default -> throw new IllegalStateException("Unknown scene id: " + sceneId);
+        }
+        //currentScene.init();
+    }
+
+    public void setColor(float r, float g, float b, float a) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.a = a;
+    }
+
     public void run() {
         init();
         loop();
 
         Callbacks.glfwFreeCallbacks(glfwWindow);
-        GLFW.glfwDestroyWindow(glfwWindow);
+        glfwDestroyWindow(glfwWindow);
 
-        GLFW.glfwTerminate();
-        GLFW.glfwSetErrorCallback(null).free();
+        glfwTerminate();
+        glfwSetErrorCallback(null).free();
     }
 
     private void init() {
         GLFWErrorCallback.createPrint(System.err).set();
 
-        if (!GLFW.glfwInit()) throw new IllegalStateException("Unable to initialize GLFW");
+        if (!glfwInit()) throw new IllegalStateException("Unable to initialize GLFW");
 
-        GLFW.glfwDefaultWindowHints();
-        GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
-        GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
+        glfwDefaultWindowHints();
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-        glfwWindow = GLFW.glfwCreateWindow(width, height, title, MemoryUtil.NULL, MemoryUtil.NULL);
+        glfwWindow = glfwCreateWindow(width, height, title, MemoryUtil.NULL, MemoryUtil.NULL);
         if (glfwWindow == MemoryUtil.NULL) throw new IllegalStateException("Unable to create window");
 
-        GLFW.glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePositionCallback);
-        GLFW.glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
-        GLFW.glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
-        GLFW.glfwSetKeyCallback(glfwWindow, KeyListener::keyPressedCallback);
+        glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePositionCallback);
+        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
+        glfwSetKeyCallback(glfwWindow, KeyListener::keyPressedCallback);
 
         try (MemoryStack stack = MemoryStack.stackPush()) {
             IntBuffer pWidth = stack.mallocInt(1);
             IntBuffer pHeight = stack.mallocInt(1);
 
-            GLFW.glfwGetWindowSize(glfwWindow, pWidth, pHeight);
+            glfwGetWindowSize(glfwWindow, pWidth, pHeight);
 
-            GLFWVidMode vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
-            GLFW.glfwSetWindowPos(glfwWindow, (vidmode.width() - pWidth.get(0)) / 2, (vidmode.height() - pHeight.get(0)) / 2);
+            GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            glfwSetWindowPos(glfwWindow, (vidmode.width() - pWidth.get(0)) / 2, (vidmode.height() - pHeight.get(0)) / 2);
         }
 
-        GLFW.glfwMakeContextCurrent(glfwWindow);
-        GLFW.glfwSwapInterval(1);
-        GLFW.glfwShowWindow(glfwWindow);
+        glfwMakeContextCurrent(glfwWindow);
+        glfwSwapInterval(1);
+        glfwShowWindow(glfwWindow);
+
+        //currentScene.init();
+
+        DataLoader.ITEMS.getValues().values().forEach(item -> {
+            if (item instanceof EquippableItem equippable)
+                System.out.println(equippable.getStatBonus());
+        });
     }
 
     private void loop() {
-        GL.createCapabilities();
-        GL11.glClearColor(0f, 0f, 0f, 1f);
+        double startTime = glfwGetTime();
+        double endTime;
+        double deltaTime = 0d;
 
-        while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
+        GL.createCapabilities();
+        GL11.glClearColor(r, g, b, a);
+
+        while (!glfwWindowShouldClose(glfwWindow)) {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-            if (KeyListener.isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) GLFW.glfwSetWindowShouldClose(glfwWindow, true);
+            //currentScene.update(deltaTime);
 
-            GLFW.glfwSwapBuffers(glfwWindow);
-            GLFW.glfwPollEvents();
+            glfwSwapBuffers(glfwWindow);
+            glfwPollEvents();
+
+            endTime = glfwGetTime();
+            deltaTime = endTime - startTime;
+            startTime = endTime;
         }
     }
 }

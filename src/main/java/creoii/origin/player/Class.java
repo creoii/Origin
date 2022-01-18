@@ -3,7 +3,6 @@ package creoii.origin.player;
 import com.google.gson.*;
 import creoii.origin.core.util.JsonUtil;
 import creoii.origin.data.DataObject;
-import creoii.origin.data.objects.JsonObjects;
 import creoii.origin.item.Item;
 
 import java.lang.reflect.Type;

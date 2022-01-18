@@ -2,22 +2,20 @@ package creoii.origin.item;
 
 import com.google.gson.*;
 import creoii.origin.data.DataObject;
-import creoii.origin.data.objects.JsonObjects;
 import creoii.origin.core.util.JsonUtil;
 
 import java.lang.reflect.Type;
+import java.util.function.Function;
 
 public class Item implements DataObject {
     private final String id;
     private final ItemType type;
     private final ItemRarity rarity;
-    private final JsonObjects.StatData statBonus;
 
-    public Item(String id, ItemType type, ItemRarity rarity, JsonObjects.StatData statBonus) {
+    public Item(String id, ItemType type, ItemRarity rarity) {
         this.id = id;
         this.type = type;
         this.rarity = rarity;
-        this.statBonus = statBonus;
     }
 
     @Override
@@ -33,32 +31,18 @@ public class Item implements DataObject {
         return rarity;
     }
 
-    public JsonObjects.StatData getStatBonus() {
-        return statBonus;
-    }
-
     public static class Serializer implements JsonSerializer<Item>, JsonDeserializer<Item> {
         @Override
         public Item deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             if (json.isJsonObject()) {
                 JsonObject object = json.getAsJsonObject();
-                String id = JsonUtil.getString(object, "id");
-                ItemType type = ItemType.valueOf(JsonUtil.getString(object, "type").toUpperCase());
-                ItemRarity rarity = ItemRarity.valueOf(JsonUtil.getString(object, "rarity", "COMMON").toUpperCase());
-                JsonObjects.StatData statBonus = JsonObjects.StatData.deserialize(object, "stat_bonus");
-                return new Item(id, type, rarity, statBonus);
-            }
-            return null;
+                return ItemType.valueOf(JsonUtil.getString(object, "type").toUpperCase()).deserializer.apply(object);
+            } throw new JsonSyntaxException("Not a json object.");
         }
 
         @Override
         public JsonElement serialize(Item src, Type typeOfSrc, JsonSerializationContext context) {
-            JsonObject object = new JsonObject();
-            object.addProperty("id", src.getId());
-            object.addProperty("type", src.getType().name().toLowerCase());
-            object.addProperty("rarity", src.getRarity().name().toLowerCase());
-            object.add("stat_bonus", context.serialize(src.getStatBonus()));
-            return object;
+            return new JsonObject();
         }
     }
 
@@ -101,14 +85,36 @@ public class Item implements DataObject {
         CONSUMABLE(5),
         TOKEN(6);
 
+        public static final int WEAPON_ID = 0;
+        public static final int ABILITY_ID = 1;
+        public static final int ARMOR_ID = 2;
+        public static final int ACCESSORY_ID = 3;
+        public static final int SIGIL_ID = 4;
+        public static final int CONSUMABLE_ID = 5;
+        public static final int TOKEN_ID = 6;
         private final int id;
+        private final Function<JsonObject, Item> deserializer;
 
         ItemType(int id) {
             this.id = id;
+            this.deserializer = getDeserializer(id);
         }
 
         public int getId() {
             return id;
+        }
+
+        private static Function<JsonObject, Item> getDeserializer(int id) {
+            return switch (id) {
+                case WEAPON_ID -> WeaponItem::deserialize;
+                case ABILITY_ID -> AbilityItem::deserialize;
+                case ARMOR_ID -> ArmorItem::deserialize;
+                case ACCESSORY_ID -> AccessoryItem::deserialize;
+                case SIGIL_ID -> SigilItem::deserialize;
+                case CONSUMABLE_ID -> WeaponItem::deserialize;
+                case TOKEN_ID -> WeaponItem::deserialize;
+                default -> WeaponItem::deserialize;
+            };
         }
     }
 }

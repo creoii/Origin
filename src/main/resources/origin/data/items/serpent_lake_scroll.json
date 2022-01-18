@@ -1,0 +1,9 @@
+{
+  "id": "serpent_lake_scroll",
+  "type": "spell",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "speed": 4,
+    "attack": 8
+  }
+}
