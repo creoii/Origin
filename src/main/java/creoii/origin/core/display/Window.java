@@ -18,8 +18,9 @@ import java.nio.IntBuffer;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Window {
-    private String title;
-    private int width, height;
+    private final String title;
+    private final int width, height;
+    private int titleBarWidth;
     private float r = 0f, g = 0f, b = 0f, a = 1f;
     private long glfwWindow;
 
@@ -29,7 +30,7 @@ public class Window {
     public Window() {
         this.title = "Origin of Chaos";
         this.width = 1080;
-        this.height = 720;
+        this.height = 720 + titleBarWidth;
     }
 
     public static Window get() {
@@ -70,7 +71,7 @@ public class Window {
 
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+        if (titleBarWidth > 0) glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 
         glfwWindow = glfwCreateWindow(width, height, title, MemoryUtil.NULL, MemoryUtil.NULL);
         if (glfwWindow == MemoryUtil.NULL) throw new IllegalStateException("Unable to create window");

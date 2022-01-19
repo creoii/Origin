@@ -2,6 +2,7 @@ package creoii.origin.data;
 
 import com.google.gson.Gson;
 import creoii.origin.core.Main;
+import creoii.origin.core.util.FileUtil;
 
 import java.io.*;
 import java.util.HashMap;
@@ -25,11 +26,11 @@ public abstract class AbstractDataBuilder<T extends DataObject> {
 
     public void load(Gson gson) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(getFileAsStream(path)));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(FileUtil.getFileAsStream(path)));
             String file;
             while ((file = reader.readLine()) != null) {
                 if (file.endsWith(".json")) {
-                    T obj = getObject(new BufferedReader(new InputStreamReader(getFileAsStream(path.concat("/".concat(file))))), gson);
+                    T obj = getObject(new BufferedReader(new InputStreamReader(FileUtil.getFileAsStream(path.concat("/".concat(file))))), gson);
                     values.put(obj.getId(), obj);
 
                     if (Main.debug) Main.sendDebug(file);
@@ -40,14 +41,6 @@ public abstract class AbstractDataBuilder<T extends DataObject> {
         } catch (IOException e) {
             Main.LOGGER.severe("Unable to find " + path);
         }
-    }
-
-    private InputStream getFileAsStream(String path) throws IOException {
-        InputStream stream = Main.class.getClassLoader().getResourceAsStream(path);
-        if (stream == null) {
-            Main.LOGGER.info("Failed to find or create directory ".concat(path));
-        }
-        return stream;
     }
 
     public T getObject(String id) {

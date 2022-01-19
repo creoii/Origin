@@ -1,5 +1,8 @@
 package creoii.origin.core.display.scene;
 
+import creoii.origin.core.display.camera.Camera;
+import creoii.origin.core.render.Shader;
+import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -9,36 +12,12 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.ARBVertexArrayObject.*;
 
 public class TitleScene extends AbstractScene {
-    private final String vertexShaderSrc = """
-            #version 330 core
-            layout(location = 0) in vec3 aPos;
-            layout(location = 1) in vec4 aColor;
-
-            out vec4 fColor;
-
-            void main() {
-                fColor = aColor;
-                gl_Position = vec4(aPos, 1);
-            }""";
-    private final String fragmentShaderSrc = """
-            #version 330 core
-
-            in vec4 fColor;
-
-            out vec4 color;
-
-            void main() {
-                color = fColor;
-            }""";
-
-    private int vertexId, fragmentId, shaderProgram;
-
     private final float[] vertexArray = {
-       // x     y   z       r   g   b    a
-         .5f, -.5f, 0f,     1f, 0f, 0f,  1f,
-        -.5f,  .5f, 0f,     0f, 1f, 0f,  1f,
-         .5f,  .5f, 0f,     1f, 0f, 1f,  1f,
-        -.5f, -.5f, 0f,     1f, 1f, 0f,  1f
+       // x     y   z       r    g    b    a
+         50.5f, -50.5f, 0f,     1f, .5f,  0f,  1f,
+        -50.5f,  50.5f, 0f,     0f,  1f, .5f,  1f,
+         50.5f,  50.5f, 0f,     1f, .5f,  1f,  1f,
+        -50.5f, -50.5f, 0f,     1f,  1f, .5f,  1f
     };
     private final int[] elementArray = {
             2, 1, 0,
@@ -46,23 +25,16 @@ public class TitleScene extends AbstractScene {
     };
 
     private int vaoId, vboId, eboId;
+    private Shader defaultShader;
 
     @Override
     public void init() {
         super.init();
 
-        vertexId = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertexId, vertexShaderSrc);
-        glCompileShader(vertexId);
+        this.camera = new Camera(new Vector2f(0f, 0f));
 
-        fragmentId = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fragmentId, fragmentShaderSrc);
-        glCompileShader(fragmentId);
-
-        shaderProgram = glCreateProgram();
-        glAttachShader(shaderProgram, vertexId);
-        glAttachShader(shaderProgram, fragmentId);
-        glLinkProgram(shaderProgram);
+        defaultShader = new Shader("origin/assets/shaders/default.glsl");
+        defaultShader.compile();
 
         vaoId = glGenVertexArrays();
         glBindVertexArray(vaoId);
@@ -92,7 +64,12 @@ public class TitleScene extends AbstractScene {
 
     @Override
     public void update(double deltaTime) {
-        glUseProgram(shaderProgram);
+        camera.getPosition().sub((float) deltaTime * 50f, 0f);
+
+        defaultShader.use();
+        defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
+        defaultShader.uploadMat4f("uView", camera.getViewMatrix());
+
         glBindVertexArray(vaoId);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
@@ -102,6 +79,7 @@ public class TitleScene extends AbstractScene {
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
-        glUseProgram(0);
+
+        defaultShader.detach();
     }
 }
