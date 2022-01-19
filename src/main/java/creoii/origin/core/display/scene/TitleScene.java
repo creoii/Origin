@@ -2,8 +2,10 @@ package creoii.origin.core.display.scene;
 
 import creoii.origin.core.display.camera.Camera;
 import creoii.origin.core.render.Shader;
+import creoii.origin.core.render.Texture;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.glfw.GLFW;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -13,11 +15,11 @@ import static org.lwjgl.opengl.ARBVertexArrayObject.*;
 
 public class TitleScene extends AbstractScene {
     private final float[] vertexArray = {
-       // x     y   z       r    g    b    a
-         50.5f, -50.5f, 0f,     1f, .5f,  0f,  1f,
-        -50.5f,  50.5f, 0f,     0f,  1f, .5f,  1f,
-         50.5f,  50.5f, 0f,     1f, .5f,  1f,  1f,
-        -50.5f, -50.5f, 0f,     1f,  1f, .5f,  1f
+    //   x       y      z       r    g    b    a        u   v
+         50.5f, -50.5f, 0f,     1f, .5f,  0f,  1f,      1f, 1f,
+        -50.5f,  50.5f, 0f,     0f,  1f, .5f,  1f,      0f, 0f,
+         50.5f,  50.5f, 0f,     1f, .5f,  1f,  1f,      1f, 0f,
+        -50.5f, -50.5f, 0f,     1f,  1f, .5f,  1f,      0f, 1f
     };
     private final int[] elementArray = {
             2, 1, 0,
@@ -26,15 +28,18 @@ public class TitleScene extends AbstractScene {
 
     private int vaoId, vboId, eboId;
     private Shader defaultShader;
+    private Texture test;
 
     @Override
     public void init() {
         super.init();
 
-        this.camera = new Camera(new Vector2f(0f, 0f));
+        camera = new Camera(new Vector2f(0f, 0f));
 
         defaultShader = new Shader("origin/assets/shaders/default.glsl");
         defaultShader.compile();
+
+        test = new Texture("src/main/resources/origin/assets/textures/wizard.png");
 
         vaoId = glGenVertexArrays();
         glBindVertexArray(vaoId);
@@ -53,13 +58,16 @@ public class TitleScene extends AbstractScene {
 
         int positionsSize = 3;
         int colorSize = 4;
-        int floatBytes = 4;
-        int vertexBytes = (positionsSize + colorSize) * floatBytes;
+        int uvSize = 2;
+        int vertexBytes = (positionsSize + colorSize + uvSize) * Float.BYTES;
         glVertexAttribPointer(0, positionsSize, GL_FLOAT, false, vertexBytes, 0);
         glEnableVertexAttribArray(0);
 
-        glVertexAttribPointer(1, colorSize, GL_FLOAT, false, vertexBytes, positionsSize * floatBytes);
+        glVertexAttribPointer(1, colorSize, GL_FLOAT, false, vertexBytes, positionsSize * Float.BYTES);
         glEnableVertexAttribArray(1);
+
+        glVertexAttribPointer(2, uvSize, GL_FLOAT, false, vertexBytes, (positionsSize + colorSize) * Float.BYTES);
+        glEnableVertexAttribArray(2);
     }
 
     @Override
@@ -67,6 +75,11 @@ public class TitleScene extends AbstractScene {
         camera.getPosition().sub((float) deltaTime * 50f, 0f);
 
         defaultShader.use();
+
+        defaultShader.uploadTexture("texSampler", 0);
+        glActiveTexture(0);
+        test.bind();
+
         defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
         defaultShader.uploadMat4f("uView", camera.getViewMatrix());
 

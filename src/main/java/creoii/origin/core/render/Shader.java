@@ -2,7 +2,7 @@ package creoii.origin.core.render;
 
 import creoii.origin.core.Main;
 import creoii.origin.core.util.FileUtil;
-import org.joml.Matrix4f;
+import org.joml.*;
 import org.lwjgl.BufferUtils;
 
 import java.io.BufferedReader;
@@ -16,6 +16,7 @@ import static org.lwjgl.opengl.GL20.glCompileShader;
 
 public class Shader {
     private int programId;
+    private boolean inUse;
     private String vertexSource = "";
     private String fragmentSource = "";
     private final String path;
@@ -67,17 +68,68 @@ public class Shader {
     }
 
     public void use() {
-        glUseProgram(programId);
+        if (!inUse) {
+            glUseProgram(programId);
+            inUse = true;
+        }
     }
 
     public void detach() {
-        glUseProgram(0);
+        if (inUse) {
+            glUseProgram(0);
+            inUse = false;
+        }
     }
 
     public void uploadMat4f(String name, Matrix4f matrix) {
         int location = glGetUniformLocation(programId, name);
+        use();
         FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
         matrix.get(buffer);
         glUniformMatrix4fv(location, false, buffer);
+    }
+
+    public void uploadMat3f(String name, Matrix3f matrix) {
+        int location = glGetUniformLocation(programId, name);
+        use();
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(9);
+        matrix.get(buffer);
+        glUniformMatrix3fv(location, false, buffer);
+    }
+
+    public void uploadVec4f(String name, Vector4f vec) {
+        int location = glGetUniformLocation(programId, name);
+        use();
+        glUniform4f(location, vec.x, vec.y, vec.z, vec.w);
+    }
+
+    public void uploadVec3f(String name, Vector3f vec) {
+        int location = glGetUniformLocation(programId, name);
+        use();
+        glUniform3f(location, vec.x, vec.y, vec.z);
+    }
+
+    public void uploadVec2f(String name, Vector2f vec) {
+        int location = glGetUniformLocation(programId, name);
+        use();
+        glUniform2f(location, vec.x, vec.y);
+    }
+
+    public void uploadFloat(String name, float f) {
+        int location = glGetUniformLocation(programId, name);
+        use();
+        glUniform1f(location, f);
+    }
+
+    public void uploadInt(String name, int i) {
+        int location = glGetUniformLocation(programId, name);
+        use();
+        glUniform1i(location, i);
+    }
+
+    public void uploadTexture(String name, int id) {
+        int location = glGetUniformLocation(programId, name);
+        use();
+        glUniform1i(location, id);
     }
 }
