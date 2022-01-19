@@ -1,11 +1,12 @@
 package creoii.origin.core.display.scene;
 
 import creoii.origin.core.display.camera.Camera;
+import creoii.origin.core.game.GameObject;
+import creoii.origin.core.game.component.SpriteRenderer;
 import creoii.origin.core.render.Shader;
 import creoii.origin.core.render.Texture;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.glfw.GLFW;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -13,7 +14,7 @@ import java.nio.IntBuffer;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.ARBVertexArrayObject.*;
 
-public class TitleScene extends AbstractScene {
+public class TitleScene extends Scene {
     private final float[] vertexArray = {
     //   x       y      z       r    g    b    a        u   v
          50.5f, -50.5f, 0f,     1f, .5f,  0f,  1f,      1f, 1f,
@@ -29,6 +30,7 @@ public class TitleScene extends AbstractScene {
     private int vaoId, vboId, eboId;
     private Shader defaultShader;
     private Texture test;
+    private GameObject testObj;
 
     @Override
     public void init() {
@@ -40,6 +42,9 @@ public class TitleScene extends AbstractScene {
         defaultShader.compile();
 
         test = new Texture("src/main/resources/origin/assets/textures/wizard.png");
+        testObj = new GameObject();
+        testObj.addComponent(new SpriteRenderer());
+        addGameObject(testObj);
 
         vaoId = glGenVertexArrays();
         glBindVertexArray(vaoId);
@@ -94,5 +99,9 @@ public class TitleScene extends AbstractScene {
         glBindVertexArray(0);
 
         defaultShader.detach();
+
+        for (GameObject obj : getGameObjects()) {
+            obj.update(deltaTime);
+        }
     }
 }

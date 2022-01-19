@@ -1,6 +1,6 @@
 package creoii.origin.core.display;
 
-import creoii.origin.core.display.scene.AbstractScene;
+import creoii.origin.core.display.scene.Scene;
 import creoii.origin.core.display.scene.TitleScene;
 import creoii.origin.core.display.scene.WorldScene;
 import creoii.origin.core.input.KeyListener;
@@ -25,7 +25,7 @@ public class Window {
     private long glfwWindow;
 
     private static Window instance;
-    private static AbstractScene currentScene = new TitleScene();
+    private static Scene currentScene = new TitleScene();
 
     public Window() {
         this.title = "Origin of Chaos";
@@ -44,6 +44,7 @@ public class Window {
             default -> throw new IllegalStateException("Unknown scene id: " + sceneId);
         }
         currentScene.init();
+        currentScene.start();
     }
 
     public void setColor(float r, float g, float b, float a) {
