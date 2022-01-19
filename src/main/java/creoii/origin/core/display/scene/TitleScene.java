@@ -11,8 +11,9 @@ import org.lwjgl.BufferUtils;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import static org.lwjgl.opengl.ARBVertexArrayObject.glBindVertexArray;
+import static org.lwjgl.opengl.ARBVertexArrayObject.glGenVertexArrays;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.ARBVertexArrayObject.*;
 
 public class TitleScene extends Scene {
     private final float[] vertexArray = {

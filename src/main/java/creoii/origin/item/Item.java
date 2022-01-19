@@ -1,8 +1,8 @@
 package creoii.origin.item;
 
 import com.google.gson.*;
-import creoii.origin.data.Identifiable;
 import creoii.origin.core.util.JsonUtil;
+import creoii.origin.data.Identifiable;
 
 import java.lang.reflect.Type;
 import java.util.function.Function;

@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSyntaxException;
 import creoii.origin.core.util.JsonUtil;
-import creoii.origin.data.objects.JsonObjects;
 
 public class SigilItem extends Item {
     public SigilItem(String id, ItemType type, ItemRarity rarity) {

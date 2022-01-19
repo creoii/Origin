@@ -1,7 +1,6 @@
 package creoii.origin.core;
 
 import creoii.origin.data.DataLoader;
-import creoii.origin.item.EquippableItem;
 
 import java.util.logging.Logger;
 
