@@ -7,7 +7,7 @@ out vec4 fColor;
 
 void main() {
     fColor = aColor;
-    gl_Position = vec4(aPos, 1f);
+    gl_Position = vec4(aPos, 1.0);
 }
 
 #type fragment

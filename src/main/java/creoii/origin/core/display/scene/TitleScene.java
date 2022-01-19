@@ -18,7 +18,7 @@ public class TitleScene extends AbstractScene {
 
             void main() {
                 fColor = aColor;
-                gl_Position = vec4(aPos, 1f);
+                gl_Position = vec4(aPos, 1);
             }""";
     private final String fragmentShaderSrc = """
             #version 330 core
@@ -55,45 +55,25 @@ public class TitleScene extends AbstractScene {
         glShaderSource(vertexId, vertexShaderSrc);
         glCompileShader(vertexId);
 
-        int success = glGetShaderi(vertexId, GL_COMPILE_STATUS);
-        if (success == GL_FALSE) {
-            int len = glGetShaderi(vertexId, GL_INFO_LOG_LENGTH);
-            System.out.println(glGetShaderInfoLog(vertexId, len));
-        }
-
         fragmentId = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(fragmentId, fragmentShaderSrc);
         glCompileShader(fragmentId);
-
-        success = glGetShaderi(fragmentId, GL_COMPILE_STATUS);
-        if (success == GL_FALSE) {
-            int len = glGetShaderi(fragmentId, GL_INFO_LOG_LENGTH);
-            System.out.println(glGetShaderInfoLog(fragmentId, len));
-        }
 
         shaderProgram = glCreateProgram();
         glAttachShader(shaderProgram, vertexId);
         glAttachShader(shaderProgram, fragmentId);
         glLinkProgram(shaderProgram);
 
-        success = glGetProgrami(shaderProgram, GL_LINK_STATUS);
-        if (success == GL_FALSE) {
-            int len = glGetShaderi(shaderProgram, GL_INFO_LOG_LENGTH);
-            System.out.println(glGetProgramInfoLog(shaderProgram, len));
-        }
-
         vaoId = glGenVertexArrays();
         glBindVertexArray(vaoId);
-
         FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertexArray.length);
         vertexBuffer.put(vertexArray).flip();
 
         vboId = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
         glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
-
         IntBuffer elementBuffer = BufferUtils.createIntBuffer(elementArray.length);
-        elementBuffer.put(elementArray);
+        elementBuffer.put(elementArray).flip();
 
         eboId = glGenBuffers();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboId);

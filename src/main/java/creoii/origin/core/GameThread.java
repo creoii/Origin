@@ -4,8 +4,8 @@ import creoii.origin.core.display.Window;
 
 public class GameThread extends Thread {
     @Override
-    public synchronized void start() {
-        super.start();
+    public void run() {
+        super.run();
         Window.get().run();
     }
 }

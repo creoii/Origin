@@ -32,7 +32,7 @@ public abstract class AbstractDataBuilder<T extends DataObject> {
                     T obj = getObject(new BufferedReader(new InputStreamReader(getFileAsStream(path.concat("/".concat(file))))), gson);
                     values.put(obj.getId(), obj);
 
-                    if (Main.debug) Main.debug(file);
+                    if (Main.debug) Main.sendDebug(file);
                 }
             }
             reader.close();

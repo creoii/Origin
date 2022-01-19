@@ -5,9 +5,6 @@ import creoii.origin.core.display.scene.TitleScene;
 import creoii.origin.core.display.scene.WorldScene;
 import creoii.origin.core.input.KeyListener;
 import creoii.origin.core.input.MouseListener;
-import creoii.origin.data.DataLoader;
-import creoii.origin.item.EquippableItem;
-import creoii.origin.item.Item;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -45,7 +42,7 @@ public class Window {
             case 1 -> currentScene = new WorldScene();
             default -> throw new IllegalStateException("Unknown scene id: " + sceneId);
         }
-        //currentScene.init();
+        currentScene.init();
     }
 
     public void setColor(float r, float g, float b, float a) {
@@ -96,13 +93,9 @@ public class Window {
         glfwMakeContextCurrent(glfwWindow);
         glfwSwapInterval(1);
         glfwShowWindow(glfwWindow);
+        GL.createCapabilities();
 
-        //currentScene.init();
-
-        DataLoader.ITEMS.getValues().values().forEach(item -> {
-            if (item instanceof EquippableItem equippable)
-                System.out.println(equippable.getStatBonus());
-        });
+        currentScene.init();
     }
 
     private void loop() {
@@ -110,13 +103,11 @@ public class Window {
         double endTime;
         double deltaTime = 0d;
 
-        GL.createCapabilities();
-        GL11.glClearColor(r, g, b, a);
-
         while (!glfwWindowShouldClose(glfwWindow)) {
+            GL11.glClearColor(r, g, b, a);
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-            //currentScene.update(deltaTime);
+            currentScene.update(deltaTime);
 
             glfwSwapBuffers(glfwWindow);
             glfwPollEvents();
