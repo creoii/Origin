@@ -1,13 +1,13 @@
 package creoii.origin.item;
 
 import com.google.gson.*;
-import creoii.origin.data.DataObject;
+import creoii.origin.data.Identifiable;
 import creoii.origin.core.util.JsonUtil;
 
 import java.lang.reflect.Type;
 import java.util.function.Function;
 
-public class Item implements DataObject {
+public class Item implements Identifiable {
     private final String id;
     private final ItemType type;
     private final ItemRarity rarity;

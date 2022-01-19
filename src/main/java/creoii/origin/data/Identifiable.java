@@ -1,5 +1,5 @@
 package creoii.origin.data;
 
-public interface DataObject {
+public interface Identifiable {
     String getId();
 }

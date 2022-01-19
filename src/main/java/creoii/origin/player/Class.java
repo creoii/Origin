@@ -2,14 +2,14 @@ package creoii.origin.player;
 
 import com.google.gson.*;
 import creoii.origin.core.util.JsonUtil;
-import creoii.origin.data.DataObject;
+import creoii.origin.data.Identifiable;
 import creoii.origin.item.Item;
 
 import java.lang.reflect.Type;
 
 import static creoii.origin.data.objects.JsonObjects.StatData;
 
-public class Class implements DataObject {
+public class Class implements Identifiable {
     private final String id;
     private final Item.ItemType[] slotTypes;
     private final StatData baseStats;

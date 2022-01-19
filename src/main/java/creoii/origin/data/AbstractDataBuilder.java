@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractDataBuilder<T extends DataObject> {
+public abstract class AbstractDataBuilder<T extends Identifiable> {
     private final Map<String, T> values = new HashMap<>();
     private final String path;
     private boolean loaded;
