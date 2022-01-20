@@ -19,9 +19,8 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class Window {
     private final String title;
-    private final int width, height;
-    private int titleBarWidth;
-    private float r = 0f, g = 0f, b = 0f, a = 1f;
+    private final int width, height, titleBarWidth = 0;
+    private float r = 1f, g = 1f, b = 1f, a = 1f;
     private long glfwWindow;
 
     private static Window instance;
@@ -35,6 +34,10 @@ public class Window {
 
     public static Window get() {
         return instance == null ? new Window() : instance;
+    }
+
+    public Scene getScene() {
+        return get().currentScene;
     }
 
     public void changeScene(int sceneId) {
