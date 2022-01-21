@@ -12,5 +12,7 @@ public class DataLoader {
 
     public void loadResources() {
         AssetPool.getShader("origin/assets/shaders/default.glsl");
+
+        AssetPool.getTexture("src/main/resources/origin/assets/textures/classes/wizard.png");
     }
 }

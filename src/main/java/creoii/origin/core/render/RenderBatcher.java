@@ -3,7 +3,11 @@ package creoii.origin.core.render;
 import creoii.origin.core.display.Window;
 import creoii.origin.core.game.component.SpriteRenderer;
 import creoii.origin.core.util.AssetPool;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
@@ -15,12 +19,18 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 public class RenderBatcher {
     private final int POS_SIZE = 2;
     private final int COLOR_SIZE = 4;
+    private final int TEX_COORDS_SIZE = 2;
+    private final int TEX_ID_SIZE = 1;
 
     private final int POS_OFFSET = 0;
     private final int COLOR_OFFSET = POS_OFFSET + POS_SIZE * Float.BYTES;
-    private final int VERTEX_SIZE = 6;
+    private final int TEX_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
+    private final int TEX_ID_OFFSET = TEX_COORDS_OFFSET + TEX_COORDS_SIZE * Float.BYTES;
+    private final int VERTEX_SIZE = 9;
     private final int VERTEX_BYTES = VERTEX_SIZE * Float.BYTES;
 
+    private List<Texture> textures;
+    private int[] texSlots = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
     private SpriteRenderer[] sprites;
     private int numSprites;
     private boolean hasRoom;
@@ -33,6 +43,7 @@ public class RenderBatcher {
     public RenderBatcher(int maxBatchSize) {
         shader = AssetPool.getShader("origin/assets/shaders/default.glsl");
 
+        textures = new ArrayList<>();
         sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
         vertices = new float[maxBatchSize * 4 * VERTEX_SIZE];
@@ -60,6 +71,12 @@ public class RenderBatcher {
         glVertexAttribPointer(1, COLOR_SIZE, GL_FLOAT, false, VERTEX_BYTES, COLOR_OFFSET);
         glEnableVertexAttribArray(1);
 
+        glVertexAttribPointer(2, TEX_COORDS_SIZE, GL_FLOAT, false, VERTEX_BYTES, TEX_COORDS_OFFSET);
+        glEnableVertexAttribArray(2);
+
+        glVertexAttribPointer(3, TEX_ID_SIZE, GL_FLOAT, false, VERTEX_BYTES, TEX_ID_OFFSET);
+        glEnableVertexAttribArray(3);
+
         return this;
     }
 
@@ -67,6 +84,10 @@ public class RenderBatcher {
         int index = this.numSprites;
         this.sprites[index] = sprite;
         this.numSprites++;
+
+        if (sprite.getTexture() != null) {
+            if (!textures.contains(sprite.getTexture())) textures.add(sprite.getTexture());
+        }
 
         loadVertexProperties(index);
 
@@ -81,6 +102,12 @@ public class RenderBatcher {
         shader.uploadMat4f("uProjection", Window.get().getScene().getCamera().getProjectionMatrix());
         shader.uploadMat4f("uView", Window.get().getScene().getCamera().getViewMatrix());
 
+        for (int i = 0; i < textures.size(); ++i) {
+            glActiveTexture(GL_TEXTURE0 + i + 1);
+            textures.get(i).bind();
+        }
+        shader.uploadIntArray("uTextures", texSlots);
+
         glBindVertexArray(vaoID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
@@ -91,6 +118,8 @@ public class RenderBatcher {
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
 
+        textures.forEach(Texture::unbind);
+
         shader.detach();
     }
 
@@ -98,6 +127,18 @@ public class RenderBatcher {
         SpriteRenderer sprite = this.sprites[index];
         int offset = index * 4 * VERTEX_SIZE;
         Vector4f color = sprite.getColor();
+
+        Vector2f[] texCoords = sprite.getTexCoords();
+        int texId = 0;
+
+        if (sprite.getTexture() != null) {
+            for (int i = 0; i < textures.size(); ++i) {
+                if (textures.get(i) == sprite.getTexture()) {
+                    texId = i + 1;
+                    break;
+                }
+            }
+        }
 
         float xAdd = 1.0f;
         float yAdd = 1.0f;
@@ -117,6 +158,10 @@ public class RenderBatcher {
             vertices[offset + 3] = color.y;
             vertices[offset + 4] = color.z;
             vertices[offset + 5] = color.w;
+
+            vertices[offset + 6] = texCoords[i].x;
+            vertices[offset + 7] = texCoords[i].y;
+            vertices[offset + 8] = texId;
 
             offset += VERTEX_SIZE;
         }

@@ -136,4 +136,10 @@ public class Shader {
         use();
         glUniform1i(location, id);
     }
+
+    public void uploadIntArray(String name, int[] array) {
+        int location = glGetUniformLocation(programId, name);
+        use();
+        glUniform1iv(location, array);
+    }
 }
