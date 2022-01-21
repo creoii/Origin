@@ -1,9 +1,0 @@
-{
-  "id": "vulcans_eruption",
-  "type": "poison",
-  "rarity": "artifact",
-  "stat_bonus": {
-    "attack": 6,
-    "attack_speed": -4
-  }
-}

@@ -11,17 +11,23 @@ import static creoii.origin.data.objects.JsonObjects.StatData;
 
 public class Class implements Identifiable {
     private final String id;
+    private final String parent;
     private final Item.ItemType[] slotTypes;
     private final StatData baseStats;
     private final StatData minStatIncrease;
     private final StatData maxStatIncrease;
 
-    public Class(String id, Item.ItemType weaponType, Item.ItemType abilityType, Item.ItemType armorType, StatData baseStats, StatData minStatIncrease, StatData maxStatIncrease) {
+    public Class(String id, String parent, Item.ItemType weaponType, Item.ItemType abilityType, Item.ItemType armorType, StatData baseStats, StatData minStatIncrease, StatData maxStatIncrease) {
         this.id = id;
-        this.slotTypes = new Item.ItemType[]{weaponType, abilityType, armorType, Item.ItemType.ACCESSORY};
+        this.parent = parent;
+        slotTypes = new Item.ItemType[]{weaponType, abilityType, armorType, Item.ItemType.ACCESSORY};
         this.baseStats = baseStats;
         this.minStatIncrease = minStatIncrease;
         this.maxStatIncrease = maxStatIncrease;
+    }
+
+    public Class(String id, Item.ItemType weaponType, Item.ItemType abilityType, Item.ItemType armorType, StatData baseStats, StatData minStatIncrease, StatData maxStatIncrease) {
+        this(id, null, weaponType, abilityType, armorType, baseStats, minStatIncrease, maxStatIncrease);
     }
 
     @Override
@@ -57,7 +63,10 @@ public class Class implements Identifiable {
                 StatData baseStats = StatData.deserialize(object, "base_stats");
                 StatData minStatIncrease = StatData.deserialize(object, "min_stat_increase");
                 StatData maxStatIncrease = StatData.deserialize(object, "max_stat_increase");
-                return new Class(id, weaponType, abilityType, armorType, baseStats, minStatIncrease, maxStatIncrease);
+                if (object.has("parent")) {
+                    String parent = JsonUtil.getString(object, "parent");
+                    return new Class(id, parent, weaponType, abilityType, armorType, baseStats, minStatIncrease, maxStatIncrease);
+                } else return new Class(id, weaponType, abilityType, armorType, baseStats, minStatIncrease, maxStatIncrease);
             }
             return null;
         }

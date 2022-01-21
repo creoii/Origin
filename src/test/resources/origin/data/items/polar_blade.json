@@ -1,8 +1,0 @@
-{
-  "id": "polar_blade",
-  "type": "sword",
-  "rarity": "artifact",
-  "stat_bonus": {
-    "max_mana": 40
-  }
-}

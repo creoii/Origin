@@ -1,0 +1,12 @@
+{
+  "id": "chancellors_gown",
+  "type": "robe",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "max_health": 40,
+    "armor": 10,
+    "health_regen": 6,
+    "attack": 4,
+    "attack_speed": 4
+  }
+}

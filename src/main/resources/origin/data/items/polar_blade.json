@@ -3,6 +3,6 @@
   "type": "sword",
   "rarity": "artifact",
   "stat_bonus": {
-    "max_mana": 40
+    "max_mana": 30
   }
 }

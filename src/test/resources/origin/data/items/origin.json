@@ -1,9 +1,0 @@
-{
-  "id": "origin",
-  "type": "orb",
-  "rarity": "artifact",
-  "stat_bonus": {
-    "max_health": 150,
-    "armor": 4
-  }
-}

@@ -80,10 +80,12 @@ public class Window {
         glfwWindow = glfwCreateWindow(width, height, title, MemoryUtil.NULL, MemoryUtil.NULL);
         if (glfwWindow == MemoryUtil.NULL) throw new IllegalStateException("Unable to create window");
 
-        ByteBuffer buffer = STBImage.stbi_load("src/main/resources/origin/assets/icon_x24.png", new int[]{1}, new int[]{1}, new int[]{1}, 0);
-        if (buffer != null) {
-            glfwSetWindowIcon(glfwWindow, GLFWImage.malloc(1).put(GLFWImage.malloc().set(24, 24, buffer)).flip());
-            STBImage.stbi_image_free(buffer);
+        ByteBuffer windowBuf = STBImage.stbi_load("src/main/resources/origin/assets/icon_x24.png", new int[]{1}, new int[]{1}, new int[]{1}, 0);
+        ByteBuffer taskbarBuf = STBImage.stbi_load("src/main/resources/origin/assets/icon_x48.png", new int[]{1}, new int[]{1}, new int[]{1}, 0);
+        if (windowBuf != null && taskbarBuf != null) {
+            glfwSetWindowIcon(glfwWindow, GLFWImage.malloc(2).put(GLFWImage.malloc().set(24, 24, windowBuf)).put(GLFWImage.malloc().set(48, 48, taskbarBuf)).flip());
+            STBImage.stbi_image_free(windowBuf);
+            STBImage.stbi_image_free(taskbarBuf);
         }
 
         try (MemoryStack stack = MemoryStack.stackPush()) {

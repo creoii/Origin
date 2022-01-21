@@ -2,7 +2,7 @@
   "id": "wizard",
   "weapon_type": "staff",
   "ability_type": "spell",
-  "armor_type": "armor",
+  "armor_type": "robe",
   "base_stats": {
   },
   "min_stat_increase": {

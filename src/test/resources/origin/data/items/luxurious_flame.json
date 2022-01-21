@@ -1,9 +1,0 @@
-{
-  "id": "luxurious_flame",
-  "type": "bow",
-  "rarity": "artifact",
-  "stat_bonus": {
-    "attack": 3,
-    "health_regen": 5
-  }
-}

@@ -1,0 +1,11 @@
+{
+  "id": "incinerator",
+  "type": "heavy_armor",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "armor": 25,
+    "attack": 12,
+    "speed": -4,
+    "attack_speed": -6
+  }
+}

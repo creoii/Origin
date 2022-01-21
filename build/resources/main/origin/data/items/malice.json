@@ -3,8 +3,8 @@
   "type": "wand",
   "rarity": "artifact",
   "stat_bonus": {
-    "max_health": 50,
-    "mana_regen": 5,
-    "health_regen": 5
+    "max_health": 25,
+    "mana_regen": 3,
+    "health_regen": 3
   }
 }

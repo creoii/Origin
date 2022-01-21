@@ -3,7 +3,7 @@
   "type": "dagger",
   "rarity": "artifact",
   "stat_bonus": {
-    "speed": 8,
-    "mana_regen": 5
+    "speed": 5,
+    "mana_regen": 4
   }
 }

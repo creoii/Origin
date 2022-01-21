@@ -1,0 +1,11 @@
+{
+  "id": "glacial_breastplate",
+  "type": "heavy_armor",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "max_mana": 70,
+    "armor": 21,
+    "mana_regen": 6,
+    "speed": 4
+  }
+}

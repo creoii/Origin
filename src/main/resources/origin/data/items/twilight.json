@@ -3,7 +3,7 @@
   "type": "wand",
   "rarity": "artifact",
   "stat_bonus": {
-    "health_regen": 8,
-    "attack": 5
+    "health_regen": 6,
+    "attack": 4
   }
 }

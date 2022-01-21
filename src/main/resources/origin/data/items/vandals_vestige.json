@@ -1,0 +1,10 @@
+{
+  "id": "vandals_vestige",
+  "type": "light_armor",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "armor": 18,
+    "speed": 8,
+    "attack_speed": 4
+  }
+}

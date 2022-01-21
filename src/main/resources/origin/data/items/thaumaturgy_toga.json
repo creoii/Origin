@@ -1,0 +1,11 @@
+{
+  "id": "thaumaturgy_toga",
+  "type": "robe",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "armor": 14,
+    "health_regen": 8,
+    "mana_regen": 8,
+    "attack": 8
+  }
+}
