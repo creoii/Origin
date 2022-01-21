@@ -18,10 +18,10 @@ public class Shader {
     private boolean inUse;
     private String vertexSource = "";
     private String fragmentSource = "";
-    private final String path;
 
     public Shader(String path) {
-        this.path = path;
+        //AssetPool.loadShader(path, this);
+        //System.out.println(AssetPool.SHADERS.toString());
         try {
             // convert the path into a reader
             BufferedReader reader = new BufferedReader(new InputStreamReader(FileUtil.getFileAsStream(path)));
@@ -52,7 +52,7 @@ public class Shader {
         }
     }
 
-    public void compile() {
+    public Shader compile() {
         int vertexId, fragmentId;
 
         vertexId = glCreateShader(GL_VERTEX_SHADER);
@@ -67,6 +67,8 @@ public class Shader {
         glAttachShader(programId, vertexId);
         glAttachShader(programId, fragmentId);
         glLinkProgram(programId);
+
+        return this;
     }
 
     public void use() {

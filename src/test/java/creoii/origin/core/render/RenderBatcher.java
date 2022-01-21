@@ -3,6 +3,7 @@ package creoii.origin.core.render;
 import creoii.origin.core.display.Window;
 import creoii.origin.core.display.camera.Camera;
 import creoii.origin.core.game.component.SpriteRenderer;
+import creoii.origin.core.util.AssetPool;
 import creoii.origin.core.util.Transform;
 import org.joml.Vector4f;
 
@@ -31,7 +32,7 @@ public class RenderBatcher {
     private Shader shader;
 
     public RenderBatcher(int maxBatchSize) {
-        shader = new Shader("origin/assets/shaders/default.glsl");
+        shader = AssetPool.getShader("origin/assets/shaders/default.glsl");
         shader.compile();
 
         sprites = new SpriteRenderer[maxBatchSize];

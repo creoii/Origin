@@ -1,6 +1,6 @@
 package creoii.origin.core.display.scene;
 
-public class WorldScene extends Scene {
+public class DungeonEditorScene extends Scene {
     @Override
     public void start() {
         super.start();

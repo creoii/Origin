@@ -1,5 +1,7 @@
 package creoii.origin.core.display;
 
+import creoii.origin.core.GameSettings;
+import creoii.origin.core.Main;
 import creoii.origin.core.display.scene.Scene;
 import creoii.origin.core.display.scene.TitleScene;
 import creoii.origin.core.display.scene.WorldScene;
@@ -7,12 +9,15 @@ import creoii.origin.core.input.KeyListener;
 import creoii.origin.core.input.MouseListener;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.stb.STBImage;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
+import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -21,16 +26,16 @@ public class Window {
     private final String title;
     private final int width, height;
     private int titleBarWidth = 0;
-    private float r = 0f, g = .275f, b = .3f, a = 1f;
+    private float r = 0f, g = 0f, b = 0f, a = 1f;
     private long glfwWindow;
 
     private static Window instance;
     private static Scene currentScene = new TitleScene();
 
     public Window() {
-        this.title = "Origin of Chaos";
-        this.width = 1080;
-        this.height = 720 + titleBarWidth;
+        this.title = "Origin";
+        this.width = GameSettings.WINDOW_WIDTH;
+        this.height = GameSettings.WINDOW_HEIGHT + titleBarWidth;
     }
 
     public static Window get() {
@@ -75,10 +80,11 @@ public class Window {
         glfwWindow = glfwCreateWindow(width, height, title, MemoryUtil.NULL, MemoryUtil.NULL);
         if (glfwWindow == MemoryUtil.NULL) throw new IllegalStateException("Unable to create window");
 
-        glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePositionCallback);
-        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
-        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
-        glfwSetKeyCallback(glfwWindow, KeyListener::keyPressedCallback);
+        ByteBuffer buffer = STBImage.stbi_load("src/main/resources/origin/assets/icon_x24.png", new int[]{1}, new int[]{1}, new int[]{1}, 0);
+        if (buffer != null) {
+            glfwSetWindowIcon(glfwWindow, GLFWImage.malloc(1).put(GLFWImage.malloc().set(24, 24, buffer)).flip());
+            STBImage.stbi_image_free(buffer);
+        }
 
         try (MemoryStack stack = MemoryStack.stackPush()) {
             IntBuffer pWidth = stack.mallocInt(1);
@@ -86,22 +92,29 @@ public class Window {
 
             glfwGetWindowSize(glfwWindow, pWidth, pHeight);
 
-            GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-            glfwSetWindowPos(glfwWindow, (vidmode.width() - pWidth.get(0)) / 2, (vidmode.height() - pHeight.get(0)) / 2);
+            GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            glfwSetWindowPos(glfwWindow, (vidMode.width() - pWidth.get(0)) / 2, (vidMode.height() - pHeight.get(0)) / 2);
         }
+
+        glfwSetCursorPosCallback(glfwWindow, MouseListener::cursorPositionCallback);
+        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
+        glfwSetKeyCallback(glfwWindow, KeyListener::keyPressedCallback);
 
         glfwMakeContextCurrent(glfwWindow);
         glfwSwapInterval(1);
         glfwShowWindow(glfwWindow);
         GL.createCapabilities();
 
+        Main.DATA_LOADER.loadResources();
+
         currentScene.start();
     }
 
     private void loop() {
-        double startTime = glfwGetTime();
-        double endTime;
-        double deltaTime = 0d;
+        float startTime = (float) glfwGetTime();
+        float endTime;
+        float deltaTime = 0f;
 
         while (!glfwWindowShouldClose(glfwWindow)) {
             GL11.glClearColor(r, g, b, a);
@@ -112,7 +125,7 @@ public class Window {
             glfwSwapBuffers(glfwWindow);
             glfwPollEvents();
 
-            endTime = glfwGetTime();
+            endTime = (float) glfwGetTime();
             deltaTime = endTime - startTime;
             startTime = endTime;
         }

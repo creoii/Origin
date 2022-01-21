@@ -23,7 +23,7 @@ public class MouseListener {
         return instance == null ? new MouseListener() : instance;
     }
 
-    public static void mousePositionCallback(long window, double mouseX, double mouseY) {
+    public static void cursorPositionCallback(long window, double mouseX, double mouseY) {
         get().lastX = get().mouseX;
         get().lastY = get().mouseY;
         get().mouseX = mouseX;
