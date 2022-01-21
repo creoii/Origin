@@ -1,5 +1,6 @@
 package creoii.origin.core.render;
 
+import creoii.origin.core.game.GameObject;
 import creoii.origin.core.game.component.SpriteRenderer;
 
 import java.util.ArrayList;
@@ -7,33 +8,39 @@ import java.util.List;
 
 public class Renderer {
     private final int MAX_BATCH_SIZE = 1000;
-    private List<RenderBatcher> batchers;
+    private List<RenderBatcher> batches;
 
     public Renderer() {
-        batchers = new ArrayList<>();
+        batches = new ArrayList<>();
     }
 
-    public void add(SpriteRenderer sprite) {
+    public void add(GameObject obj) {
+        SpriteRenderer spr = obj.getComponent(SpriteRenderer.class);
+        if (spr != null) {
+            add(spr);
+        }
+    }
+
+    private void add(SpriteRenderer sprite) {
         boolean added = false;
-        for (RenderBatcher b : batchers) {
-            if (b.hasRoom()) {
-                b.addSprite(sprite);
+        for (RenderBatcher batch : batches) {
+            if (batch.hasRoom()) {
+                batch.addSprite(sprite);
                 added = true;
                 break;
             }
         }
 
         if (!added) {
-            RenderBatcher add = new RenderBatcher(MAX_BATCH_SIZE);
-            add.start();
-            batchers.add(add);
-            add.addSprite(sprite);
+            RenderBatcher newBatch = new RenderBatcher(MAX_BATCH_SIZE).start();
+            batches.add(newBatch);
+            newBatch.addSprite(sprite);
         }
     }
 
     public void render(double deltaTime) {
-        for (RenderBatcher b : batchers) {
-            b.render();
+        for (RenderBatcher batch : batches) {
+            batch.render();
         }
     }
 }

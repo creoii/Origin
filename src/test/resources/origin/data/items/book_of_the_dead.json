@@ -1,0 +1,9 @@
+{
+  "id": "book_of_the_dead",
+  "type": "book",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "health_regen": 12,
+    "mana_regen": 8
+  }
+}

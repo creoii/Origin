@@ -1,0 +1,10 @@
+{
+  "id": "the_dreamfang",
+  "type": "accessory",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "max_mana": 100,
+    "mana_regen": 12,
+    "attack": 5
+  }
+}

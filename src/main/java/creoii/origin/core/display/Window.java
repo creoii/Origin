@@ -19,8 +19,9 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class Window {
     private final String title;
-    private final int width, height, titleBarWidth = 0;
-    private float r = 1f, g = 1f, b = 1f, a = 1f;
+    private final int width, height;
+    private int titleBarWidth = 0;
+    private float r = 0f, g = .275f, b = .3f, a = 1f;
     private long glfwWindow;
 
     private static Window instance;
@@ -37,7 +38,7 @@ public class Window {
     }
 
     public Scene getScene() {
-        return get().currentScene;
+        return currentScene;
     }
 
     public void changeScene(int sceneId) {
@@ -46,7 +47,6 @@ public class Window {
             case 1 -> currentScene = new WorldScene();
             default -> throw new IllegalStateException("Unknown scene id: " + sceneId);
         }
-        currentScene.init();
         currentScene.start();
     }
 
@@ -60,12 +60,7 @@ public class Window {
     public void run() {
         init();
         loop();
-
-        Callbacks.glfwFreeCallbacks(glfwWindow);
-        glfwDestroyWindow(glfwWindow);
-
-        glfwTerminate();
-        glfwSetErrorCallback(null).free();
+        exit();
     }
 
     private void init() {
@@ -100,7 +95,7 @@ public class Window {
         glfwShowWindow(glfwWindow);
         GL.createCapabilities();
 
-        currentScene.init();
+        currentScene.start();
     }
 
     private void loop() {
@@ -121,5 +116,13 @@ public class Window {
             deltaTime = endTime - startTime;
             startTime = endTime;
         }
+    }
+
+    private void exit() {
+        Callbacks.glfwFreeCallbacks(glfwWindow);
+        glfwDestroyWindow(glfwWindow);
+
+        glfwTerminate();
+        glfwSetErrorCallback(null).free();
     }
 }

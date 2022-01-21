@@ -14,17 +14,14 @@ import java.util.Map;
 public abstract class AbstractDataBuilder<T extends Identifiable> {
     private final Map<String, T> values = new HashMap<>();
     private final String path;
-    private boolean loaded;
 
     public AbstractDataBuilder(String name, Gson gson) {
         path = "origin/data/".concat(name).concat("/");
         long startTime = System.nanoTime();
         load(gson);
         long endTime = System.nanoTime();
-        if (loaded) {
-            DataLoader.BUILDERS.add(this);
-            System.out.println("Successfully loaded ".concat(name).concat(" in ").concat(String.valueOf((endTime - startTime) / 1000000d)).concat(" ms"));
-        }
+        DataLoader.BUILDERS.add(this);
+        System.out.println("Successfully loaded ".concat(name).concat(" in ").concat(String.valueOf((endTime - startTime) / 1000000d)).concat(" ms"));
     }
 
     public void load(Gson gson) {
@@ -40,7 +37,6 @@ public abstract class AbstractDataBuilder<T extends Identifiable> {
                 }
             }
             reader.close();
-            loaded = true;
         } catch (IOException e) {
             Main.LOGGER.severe("Unable to find " + path);
         }
@@ -55,10 +51,6 @@ public abstract class AbstractDataBuilder<T extends Identifiable> {
 
     public Map<String, T> getValues() {
         return values;
-    }
-
-    public boolean isLoaded() {
-        return loaded;
     }
 
     abstract T getObject(Reader reader, Gson gson);

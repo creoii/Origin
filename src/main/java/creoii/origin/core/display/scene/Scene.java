@@ -2,50 +2,39 @@ package creoii.origin.core.display.scene;
 
 import creoii.origin.core.display.camera.Camera;
 import creoii.origin.core.game.GameObject;
-import creoii.origin.core.game.component.SpriteRenderer;
 import creoii.origin.core.render.Renderer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Scene {
+    protected Renderer renderer = new Renderer();
     protected Camera camera;
     private boolean running = false;
-    private Renderer renderer = new Renderer();
     private List<GameObject> gameObjects = new ArrayList<>();
-
-    public void init() {
-        if (!running) {
-            running = true;
-        }
-    }
 
     public Camera getCamera() {
         return camera;
     }
 
-    public Renderer getRenderer() {
-        return renderer;
+    public List<GameObject> getGameObjects() {
+        return gameObjects;
     }
 
     public void start() {
         for (GameObject obj : gameObjects) {
             obj.start();
-            renderer.add(obj.getComponent(SpriteRenderer.class));
+            renderer.add(obj);
         }
+        running = true;
     }
 
-    public GameObject addGameObject(GameObject obj) {
+    public void addGameObject(GameObject obj) {
         gameObjects.add(obj);
         if (running) {
             obj.start();
-            renderer.add(obj.getComponent(SpriteRenderer.class));
+            renderer.add(obj);
         }
-        return null;
-    }
-
-    public List<GameObject> getGameObjects() {
-        return gameObjects;
     }
 
     public abstract void update(double deltaTime);

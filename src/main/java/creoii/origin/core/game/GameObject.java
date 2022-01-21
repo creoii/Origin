@@ -1,43 +1,23 @@
 package creoii.origin.core.game;
 
 import creoii.origin.core.game.component.Component;
-import creoii.origin.core.util.Transform;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameObject {
     private final List<Component> components = new ArrayList<>();
-    private Transform transform;
 
-    public GameObject(Transform transform) {
-        this.transform = transform;
-    }
-
-    public GameObject(Transform transform, Component... components) {
-        this(transform);
+    public GameObject(Component... components) {
         for (Component c : components) {
             addComponent(c);
         }
     }
 
-    public Transform getTransform() {
-        return transform;
-    }
-
     public <T extends Component> T getComponent(Class<T> clazz) {
         for (Component c : components) {
-            if (clazz.isAssignableFrom(c.getClass())) {
-                try {
-                    return clazz.cast(c);
-                } catch (ClassCastException e) {
-                    e.printStackTrace();
-                    assert false : "Error: Casting component.";
-                }
-            }
+            if (clazz.isAssignableFrom(c.getClass())) return clazz.cast(c);
         }
-
         return null;
     }
 

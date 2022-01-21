@@ -23,10 +23,12 @@ public class Shader {
     public Shader(String path) {
         this.path = path;
         try {
+            // convert the path into a reader
             BufferedReader reader = new BufferedReader(new InputStreamReader(FileUtil.getFileAsStream(path)));
             List<String> lines = reader.lines().toList();
             String line;
             String type = "";
+            // i increments every line; j increments every #type
             for (int i = 0, j = 0; i < lines.size(); ++i) {
                 line = lines.get(i);
                 if (line.contains("#type")) {
@@ -35,6 +37,7 @@ public class Shader {
                     continue;
                 }
 
+                // add lines to vertexSource or fragmentSource
                 if (j == 1) {
                     if (type.equals("vertex")) vertexSource = vertexSource.concat(line).concat("\n");
                     else if (type.equals("fragment")) fragmentSource = fragmentSource.concat(line).concat("\n");

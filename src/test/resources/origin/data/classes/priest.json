@@ -1,0 +1,12 @@
+{
+  "id": "priest",
+  "weapon_type": "wand",
+  "ability_type": "book",
+  "armor_type": "armor",
+  "base_stats": {
+  },
+  "min_stat_increase": {
+  },
+  "max_stat_increase": {
+  }
+}

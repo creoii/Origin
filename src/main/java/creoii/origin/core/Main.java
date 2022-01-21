@@ -1,5 +1,6 @@
 package creoii.origin.core;
 
+import creoii.origin.core.display.Window;
 import creoii.origin.data.DataLoader;
 
 import java.util.logging.Logger;
@@ -10,13 +11,7 @@ public class Main {
     public static final boolean debug = false;
 
     public static void main(String[] args) {
-        if (DATA_LOADER.isComplete()) {
-            new GameThread().start();
-        }
-
-        DataLoader.ITEMS.getValues().values().forEach(item -> {
-            //if (item instanceof EquippableItem equippable) System.out.println(equippable.getStatBonus());
-        });
+        Window.get().run();
     }
 
     public static void sendDebug(String message) {
