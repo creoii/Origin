@@ -1,6 +1,7 @@
 package creoii.origin.core.render;
 
 import creoii.origin.core.display.Window;
+import creoii.origin.core.game.Transform;
 import creoii.origin.core.game.component.SpriteRenderer;
 import creoii.origin.core.util.AssetPool;
 import org.joml.Vector2f;
@@ -151,8 +152,9 @@ public class RenderBatcher {
                 yAdd = 1.0f;
             }
 
-            vertices[offset] = sprite.getPosition().x + (xAdd * sprite.getScale().x);
-            vertices[offset + 1] = sprite.getPosition().y + (yAdd * sprite.getScale().y);
+            Transform transform = sprite.getParent().getTransform();
+            vertices[offset] = transform.getPosition().x + (xAdd * transform.getScale().x);
+            vertices[offset + 1] = transform.getPosition().y + (yAdd * transform.getScale().y);
 
             vertices[offset + 2] = color.x;
             vertices[offset + 3] = color.y;

@@ -5,31 +5,18 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 public class SpriteRenderer extends Component {
-    private Vector2f position;
-    private Vector2f scale;
     private Vector4f color;
-    private Vector2f[] texCoords;
     private Texture texture;
 
-    public SpriteRenderer(Vector2f position, Vector2f scale, Vector4f color) {
-        this.position = position;
-        this.scale = scale;
+    public SpriteRenderer(Vector4f color) {
         this.color = color;
         this.texture = null;
     }
 
-    public SpriteRenderer(Vector2f position, Vector2f scale, Texture texture) {
-        this.position = position;
-        this.scale = scale;
+    public SpriteRenderer(Texture texture) {
         this.texture = texture;
         this.color = new Vector4f(1f, 1f, 1f, 1f);
     }
-
-    public Vector2f getPosition() {
-        return position;
-    }
-
-    public Vector2f getScale() { return scale; }
 
     public Vector4f getColor() {
         return color;

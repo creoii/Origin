@@ -2,6 +2,7 @@ package creoii.origin.core.display.scene;
 
 import creoii.origin.core.display.camera.Camera;
 import creoii.origin.core.game.GameObject;
+import creoii.origin.core.game.Transform;
 import creoii.origin.core.game.component.SpriteRenderer;
 import creoii.origin.core.util.AssetPool;
 import org.joml.Vector2f;
@@ -13,7 +14,7 @@ public class TitleScene extends Scene {
         super.start();
         camera = new Camera(new Vector2f());
 
-        addGameObject(new GameObject(new SpriteRenderer(new Vector2f(100f, 100f), new Vector2f(256f, 256f), AssetPool.getTexture("src/main/resources/origin/assets/textures/classes/wizard.png"))));
+        addGameObject(new GameObject(new Transform(new Vector2f(100f, 100f), new Vector2f(256f, 256f)), new SpriteRenderer(AssetPool.getTexture("src/main/resources/origin/assets/textures/classes/wizard.png"))));
     }
 
     @Override

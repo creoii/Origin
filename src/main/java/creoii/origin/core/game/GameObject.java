@@ -6,13 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameObject {
+    private Transform transform;
     private final List<Component> components = new ArrayList<>();
 
-    public GameObject(Component... components) {
+    public GameObject(Transform transform, Component... components) {
+        this.transform = transform;
         for (Component c : components) {
             addComponent(c);
         }
     }
+
+    public Transform getTransform() { return transform; }
 
     public <T extends Component> T getComponent(Class<T> clazz) {
         for (Component c : components) {
