@@ -17,11 +17,15 @@ public class SpriteRenderer {
         sprite = new Sprite(null);
     }
 
-    public SpriteRenderer(Transform transform, Sprite sprite) {
+    public SpriteRenderer(Transform transform, Sprite sprite, Vector4f tint) {
         this.transform = transform;
         texture = sprite.getTexture();
         texCoords = sprite.getTexCoords();
-        color = new Vector4f(1f, 1f, 1f, 1f);
+        color = tint;
+    }
+
+    public SpriteRenderer(Transform transform, Sprite sprite) {
+        this(transform, sprite, new Vector4f(1f, 1f, 1f, 1f));
     }
 
     public Vector4f getColor() {

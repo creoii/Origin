@@ -1,5 +1,7 @@
 package creoii.origin.core.display.camera;
 
+import creoii.origin.core.game.GameSettings;
+import creoii.origin.core.input.KeyListener;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -21,10 +23,8 @@ public class Camera {
     }
 
     public Matrix4f getViewMatrix() {
-        Vector3f camFront = new Vector3f(0f, 0f, -1f);
-        Vector3f camUp = new Vector3f(0f, 1f, 0f);
         viewMatrix.identity();
-        return viewMatrix.lookAt(new Vector3f(position.x, position.y, 20), camFront.add(position.x, position.y, 0f), camUp);
+        return viewMatrix.lookAt(new Vector3f(position.x, position.y, 20), new Vector3f(0f, 0f, -1f).add(position.x, position.y, 0f), new Vector3f(0f, 1f, 0f));
     }
 
     public Matrix4f getProjectionMatrix() {
@@ -33,5 +33,12 @@ public class Camera {
 
     public Vector2f getPosition() {
         return position;
+    }
+
+    public void update(float deltaTime) {
+        if (KeyListener.isKeyPressed(GameSettings.MOVE_FORWARDS)) position.add(0f, deltaTime * 250f);
+        if (KeyListener.isKeyPressed(GameSettings.MOVE_BACKWARDS)) position.add(0f, deltaTime * -250f);
+        if (KeyListener.isKeyPressed(GameSettings.MOVE_RIGHT)) position.add(deltaTime * 250f, 0f);
+        if (KeyListener.isKeyPressed(GameSettings.MOVE_LEFT)) position.add(deltaTime * -250f, 0f);
     }
 }

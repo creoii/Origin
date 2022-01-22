@@ -1,8 +1,6 @@
 package creoii.origin.player;
 
-import creoii.origin.core.game.GameSettings;
 import creoii.origin.core.game.Transform;
-import creoii.origin.core.input.KeyListener;
 import creoii.origin.data.objects.JsonObjects;
 import org.joml.Vector2f;
 
@@ -40,9 +38,6 @@ public class Character {
     }
 
     public void update(float deltaTime) {
-        if (KeyListener.isKeyPressed(GameSettings.MOVE_FORWARDS)) player.getSpriteRenderer().getTransform().getPosition().add(0f, deltaTime * 100f);
-        if (KeyListener.isKeyPressed(GameSettings.MOVE_BACKWARDS)) player.getSpriteRenderer().getTransform().getPosition().add(0f, deltaTime * -100f);
-        if (KeyListener.isKeyPressed(GameSettings.MOVE_RIGHT)) player.getSpriteRenderer().getTransform().getPosition().add(deltaTime * 100f, 0f);
-        if (KeyListener.isKeyPressed(GameSettings.MOVE_LEFT)) player.getSpriteRenderer().getTransform().getPosition().add(deltaTime * -100f, 0f);
+
     }
 }

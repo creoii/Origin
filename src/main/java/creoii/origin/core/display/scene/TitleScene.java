@@ -17,8 +17,7 @@ public class TitleScene extends Scene {
             for (int i = 0; i < region.getTiles().length; ++i) {
                 for (int j = 0; j < region.getTiles()[i].length; ++j) {
                     Tile tile = region.getTiles()[i][j];
-                    tile.init(new Vector2f(i * 20, j * 20));
-                    renderer.add(tile.getSprite());
+                    renderer.add(tile.init(new Vector2f(region.getPosition().x + (i * 20), region.getPosition().y + (j * 20))).getSprite());
                 }
             }
         });
@@ -27,5 +26,6 @@ public class TitleScene extends Scene {
     @Override
     public void update(float deltaTime) {
         renderer.render(deltaTime);
+        camera.update(deltaTime);
     }
 }

@@ -7,8 +7,10 @@ import java.util.function.Consumer;
 
 public class Region {
     private Tile[][] tiles;
+    private Vector2f position;
 
-    public Region() {
+    public Region(Vector2f position) {
+        this.position = position;
         tiles = new Tile[32][32];
 
         for (int i = 0; i < tiles.length; ++i) {
@@ -21,6 +23,7 @@ public class Region {
     public Tile[][] getTiles() {
         return tiles;
     }
+    public Vector2f getPosition() { return position; }
 
     public void forEachTile(Consumer<Tile> action) {
         for (Tile[] tile : tiles) {

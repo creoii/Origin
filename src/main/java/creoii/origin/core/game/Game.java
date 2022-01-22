@@ -14,7 +14,7 @@ public class Game {
         player = new Player("test");
         player.createCharacter(DataLoader.CLASSES.getObject("wizard"));
         activeCharacter = player.getCharacter(0);
-        world = new World(World.WorldSize.SMALL);
+        world = new World(World.WorldSize.MEDIUM);
     }
 
     public static Player getPlayer() { return player; }

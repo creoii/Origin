@@ -1,6 +1,8 @@
 package creoii.origin.player;
 
+import creoii.origin.core.game.GameSettings;
 import creoii.origin.core.game.Transform;
+import creoii.origin.core.input.KeyListener;
 import creoii.origin.core.render.DynamicSpriteRenderer;
 import creoii.origin.core.render.Spritesheet;
 import creoii.origin.core.util.AssetPool;
@@ -20,7 +22,7 @@ public class Player {
     }
 
     public void init() {
-        sprite = new DynamicSpriteRenderer(new Transform(new Vector2f(100f, 100f), new Vector2f(256f, 256f)), AssetPool.getSpritesheet(Spritesheet.X8_SHEET).getSprite(0));
+        sprite = new DynamicSpriteRenderer(new Transform(new Vector2f(100f, 100f), new Vector2f(50f, 50f)), AssetPool.getSpritesheet(Spritesheet.X8_SHEET).getSprite(0));
     }
 
     public String getName() { return name; }
@@ -41,6 +43,11 @@ public class Player {
     }
 
     public void update(float deltaTime) {
+        if (KeyListener.isKeyPressed(GameSettings.MOVE_FORWARDS)) sprite.getTransform().getPosition().add(0f, deltaTime * 250f);
+        if (KeyListener.isKeyPressed(GameSettings.MOVE_BACKWARDS)) sprite.getTransform().getPosition().add(0f, deltaTime * -250f);
+        if (KeyListener.isKeyPressed(GameSettings.MOVE_RIGHT)) sprite.getTransform().getPosition().add(deltaTime * 250f, 0f);
+        if (KeyListener.isKeyPressed(GameSettings.MOVE_LEFT)) sprite.getTransform().getPosition().add(deltaTime * -250f, 0f);
+
         sprite.update(deltaTime);
     }
 }

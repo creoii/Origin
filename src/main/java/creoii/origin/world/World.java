@@ -1,5 +1,7 @@
 package creoii.origin.world;
 
+import org.joml.Vector2f;
+
 import java.util.function.Consumer;
 
 public class World {
@@ -12,7 +14,7 @@ public class World {
 
         for (int i = 0; i < regions.length; ++i) {
             for (int j = 0; j < regions[i].length; ++j) {
-                regions[i][j] = new Region();
+                regions[i][j] = new Region(new Vector2f(i * 640, j * 640));
             }
         }
     }
@@ -28,9 +30,9 @@ public class World {
     }
 
     public enum WorldSize {
-        SMALL(2),
-        MEDIUM(4),
-        LARGE(6);
+        SMALL(1),
+        MEDIUM(3),
+        LARGE(5);
 
         private final int size;
 
