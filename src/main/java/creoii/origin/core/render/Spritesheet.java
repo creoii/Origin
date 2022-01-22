@@ -68,4 +68,13 @@ public class Spritesheet {
         if (i >= sprites.size()) return sprites.get(0);
         return sprites.get(i);
     }
+
+    public Sprite getSprite(String id) {
+        for (Sprite sprite : sprites) {
+            if (sprite.getTexture().getPath().equals(id)) {
+                return sprite;
+            }
+        }
+        return null;
+    }
 }

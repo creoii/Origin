@@ -97,10 +97,12 @@ public class RenderBatcher {
     public void render() {
         boolean rebuffer = false;
         for (int i = 0; i < spriteCount; ++i) {
-            if (sprites[i].isDirty()) {
-                loadVertexProperties(i);
-                sprites[i].setDirty(false);
-                rebuffer = true;
+            if (sprites[i].isDynamic()) {
+                if (((DynamicSpriteRenderer) sprites[i]).isDirty()) {
+                    loadVertexProperties(i);
+                    ((DynamicSpriteRenderer) sprites[i]).setDirty(false);
+                    rebuffer = true;
+                }
             }
         }
 
