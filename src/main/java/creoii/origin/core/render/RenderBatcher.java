@@ -2,7 +2,6 @@ package creoii.origin.core.render;
 
 import creoii.origin.core.display.Window;
 import creoii.origin.core.game.Transform;
-import creoii.origin.core.game.component.SpriteRenderer;
 import creoii.origin.core.util.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -163,7 +162,7 @@ public class RenderBatcher {
                 yAdd = 1.0f;
             }
 
-            Transform transform = sprite.getParent().getTransform();
+            Transform transform = sprite.getTransform();
             vertices[offset] = transform.getPosition().x + (xAdd * transform.getScale().x);
             vertices[offset + 1] = transform.getPosition().y + (yAdd * transform.getScale().y);
 

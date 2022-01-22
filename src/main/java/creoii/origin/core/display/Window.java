@@ -1,10 +1,11 @@
 package creoii.origin.core.display;
 
-import creoii.origin.core.GameSettings;
 import creoii.origin.core.Main;
 import creoii.origin.core.display.scene.Scene;
 import creoii.origin.core.display.scene.TitleScene;
 import creoii.origin.core.display.scene.WorldScene;
+import creoii.origin.core.game.Game;
+import creoii.origin.core.game.GameSettings;
 import creoii.origin.core.input.KeyListener;
 import creoii.origin.core.input.MouseListener;
 import org.lwjgl.BufferUtils;
@@ -25,13 +26,13 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class Window {
     private final String title;
-    private final int width, height;
-    private int titleBarWidth = 0;
-    private float r = 0f, g = 0f, b = 0f, a = 1f;
+    private final int width, height, titleBarWidth = 0;
+    private final float r = 0f, g = 0f, b = 0f, a = 1f;
     private long glfwWindow;
 
-    private static Window instance;
+    private static Window instance = new Window();
     private static Scene currentScene = new TitleScene();
+    private static final Game game = new Game();
 
     public Window() {
         this.title = "Origin";
@@ -39,13 +40,11 @@ public class Window {
         this.height = GameSettings.WINDOW_HEIGHT + titleBarWidth;
     }
 
-    public static Window get() {
-        return instance == null ? new Window() : instance;
-    }
-
+    public static Window get() { return instance; }
     public Scene getScene() {
         return currentScene;
     }
+    public static Game getGame() { return game; }
 
     public void changeScene(int sceneId) {
         switch (sceneId) {
@@ -54,13 +53,6 @@ public class Window {
             default -> throw new IllegalStateException("Unknown scene id: " + sceneId);
         }
         currentScene.start();
-    }
-
-    public void setColor(float r, float g, float b, float a) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.a = a;
     }
 
     public void run() {
@@ -124,6 +116,7 @@ public class Window {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
             currentScene.update(deltaTime);
+            game.update(deltaTime);
 
             glfwSwapBuffers(glfwWindow);
             glfwPollEvents();

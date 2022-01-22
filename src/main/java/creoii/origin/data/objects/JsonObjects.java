@@ -5,7 +5,40 @@ import com.google.gson.JsonObject;
 import creoii.origin.core.util.JsonUtil;
 
 public class JsonObjects {
-    public record StatData(int maxHealth, int maxMana, int speed, int attackSpeed, int healthRegen, int manaRegen, int attack, int armor) {
+    public static class StatData {
+        public int maxHealth, maxMana, speed, attackSpeed, healthRegen, manaRegen, attack, armor;
+
+        public StatData(int maxHealth, int maxMana, int speed, int attackSpeed, int healthRegen, int manaRegen, int attack, int armor) {
+            this.maxHealth = maxHealth;
+            this.maxMana = maxMana;
+            this.speed = speed;
+            this.attackSpeed = attackSpeed;
+            this.healthRegen = healthRegen;
+            this.manaRegen = manaRegen;
+            this.attack = attack;
+            this.armor = armor;
+        }
+
+        public int getMaxHealth() { return maxHealth; }
+        public int getMaxMana() { return maxMana; }
+        public int getSpeed() { return speed; }
+        public int getAttackSpeed() { return attackSpeed; }
+        public int getHealthRegen() { return healthRegen; }
+        public int getManaRegen() { return manaRegen; }
+        public int getAttack() { return attack; }
+        public int getArmor() { return armor; }
+
+        public void add(StatData other) {
+            maxHealth += other.maxHealth;
+            maxMana += other.maxMana;
+            speed += other.speed;
+            attackSpeed += other.attackSpeed;
+            healthRegen += other.healthRegen;
+            manaRegen += other.manaRegen;
+            attack += other.attack;
+            armor += other.armor;
+        }
+
         public static StatData deserialize(JsonObject object, String name) {
             if (object.has(name)) {
                 JsonObject object1 = object.getAsJsonObject(name);
@@ -23,14 +56,14 @@ public class JsonObjects {
 
         public static JsonElement serialize(StatData src) {
             JsonObject object = new JsonObject();
-            object.addProperty("max_health", src.maxHealth());
-            object.addProperty("max_mana", src.maxMana());
-            object.addProperty("speed", src.speed());
-            object.addProperty("attack_speed", src.attackSpeed());
-            object.addProperty("health_regen", src.healthRegen());
-            object.addProperty("mana_regen", src.manaRegen());
-            object.addProperty("attack", src.attack());
-            object.addProperty("armor", src.armor());
+            object.addProperty("max_health", src.getMaxHealth());
+            object.addProperty("max_mana", src.getMaxMana());
+            object.addProperty("speed", src.getSpeed());
+            object.addProperty("attack_speed", src.getAttackSpeed());
+            object.addProperty("health_regen", src.getHealthRegen());
+            object.addProperty("mana_regen", src.getManaRegen());
+            object.addProperty("attack", src.getAttack());
+            object.addProperty("armor", src.getArmor());
             return object;
         }
     }

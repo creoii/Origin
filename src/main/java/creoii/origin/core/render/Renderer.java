@@ -1,8 +1,5 @@
 package creoii.origin.core.render;
 
-import creoii.origin.core.game.GameObject;
-import creoii.origin.core.game.component.SpriteRenderer;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +11,7 @@ public class Renderer {
         batches = new ArrayList<>();
     }
 
-    public void add(GameObject obj) {
-        SpriteRenderer spr = obj.getComponent(SpriteRenderer.class);
-        if (spr != null) {
-            add(spr);
-        }
-    }
-
-    private void add(SpriteRenderer sprite) {
+    public void add(SpriteRenderer sprite) {
         boolean added = false;
         for (RenderBatcher batch : batches) {
             if (batch.hasRoom()) {

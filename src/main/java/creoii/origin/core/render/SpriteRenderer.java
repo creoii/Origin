@@ -1,26 +1,26 @@
-package creoii.origin.core.game.component;
+package creoii.origin.core.render;
 
 import creoii.origin.core.game.Transform;
-import creoii.origin.core.render.Sprite;
-import creoii.origin.core.render.Spritesheet;
-import creoii.origin.core.render.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-public class SpriteRenderer extends Component {
+public class SpriteRenderer {
     private Vector4f color;
     private Texture texture;
     private Vector2f[] texCoords;
     private Sprite sprite;
-    private Transform lastTransform;
+    private Transform transform;
+    private Transform lastTransform = new Transform(new Vector2f(), new Vector2f());
     private boolean dirty = true;
 
-    public SpriteRenderer(Vector4f color) {
+    public SpriteRenderer(Transform transform, Vector4f color) {
+        this.transform = transform;
         this.color = color;
         sprite = new Sprite(null);
     }
 
-    public SpriteRenderer(Sprite sprite) {
+    public SpriteRenderer(Transform transform, Sprite sprite) {
+        this.transform = transform;
         texture = sprite.getTexture();
         texCoords = sprite.getTexCoords();
         color = new Vector4f(1f, 1f, 1f, 1f);
@@ -29,13 +29,10 @@ public class SpriteRenderer extends Component {
     public Vector4f getColor() {
         return color;
     }
-
     public Texture getTexture() { return texture; }
-
     public Vector2f[] getTexCoords() { return texCoords; }
-
+    public Transform getTransform() { return transform; }
     public boolean isDirty() { return dirty; }
-
     public void setDirty(boolean dirty) { this.dirty = dirty; }
 
     public void setSprite(Sprite sprite) {
@@ -50,15 +47,10 @@ public class SpriteRenderer extends Component {
         }
     }
 
-    @Override
-    public void start() {
-        lastTransform = getParent().getTransform().copy();
-    }
-
-    @Override
     public void update(double deltaTime) {
-        if (!lastTransform.equals(getParent().getTransform())) {
-            getParent().getTransform().copy(lastTransform);
+        if (!lastTransform.equals(transform)) {
+            dirty = true;
         }
+        transform.copy(lastTransform);
     }
 }
