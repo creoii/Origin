@@ -6,9 +6,9 @@ import creoii.origin.player.Class;
 
 import java.io.Reader;
 
-public class ClassBuilder extends AbstractDataBuilder<Class> {
+public class ClassBuilder extends DataBuilder<Class> {
     public ClassBuilder() {
-        super("classes", new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Class.class, new Class.Serializer()).create());
+        super("classes");
     }
 
     @Override

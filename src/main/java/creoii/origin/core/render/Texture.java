@@ -12,6 +12,8 @@ import static org.lwjgl.opengl.GL11.*;
 public class Texture {
     private String path;
     private int id;
+    private int width, height;
+    private ByteBuffer image;
 
     public Texture(String path) {
         this.path = path;
@@ -28,9 +30,11 @@ public class Texture {
         IntBuffer height = BufferUtils.createIntBuffer(1);
         IntBuffer channels = BufferUtils.createIntBuffer(1);
         STBImage.stbi_set_flip_vertically_on_load(true);
-        ByteBuffer image = STBImage.stbi_load(path, width, height, channels, 0);
+        image = STBImage.stbi_load(path, width, height, channels, 0);
 
         if (image != null) {
+            this.width = width.get(0);
+            this.height = height.get(0);
             if (channels.get(0) == 3) {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width.get(0), height.get(0), 0, GL_RGB, GL_UNSIGNED_BYTE, image);
             } else if (channels.get(0) == 4) {
@@ -41,6 +45,14 @@ public class Texture {
             Main.LOGGER.info("Unable to load texture from ".concat(path));
         }
     }
+
+    public String getPath() { return path; }
+
+    public int getWidth() { return width; }
+
+    public int getHeight() { return height; }
+
+    public ByteBuffer getImage() { return image; }
 
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, id);

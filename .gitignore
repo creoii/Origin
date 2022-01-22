@@ -1,3 +1,4 @@
 build/*
 .gradle/*
 .idea/*
+src/main/resources/origin/assets/spritesheets/*

@@ -20,8 +20,6 @@ public class Shader {
     private String fragmentSource = "";
 
     public Shader(String path) {
-        //AssetPool.loadShader(path, this);
-        //System.out.println(AssetPool.SHADERS.toString());
         try {
             // convert the path into a reader
             BufferedReader reader = new BufferedReader(new InputStreamReader(FileUtil.getFileAsStream(path)));

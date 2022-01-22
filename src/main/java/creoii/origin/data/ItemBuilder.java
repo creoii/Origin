@@ -6,9 +6,9 @@ import creoii.origin.item.Item;
 
 import java.io.Reader;
 
-public class ItemBuilder extends AbstractDataBuilder<Item> {
+public class ItemBuilder extends DataBuilder<Item> {
     public ItemBuilder() {
-        super("items", new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Item.class, new Item.Serializer()).create());
+        super("items");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package creoii.origin.core.util;
 
 import creoii.origin.core.render.Shader;
+import creoii.origin.core.render.Spritesheet;
 import creoii.origin.core.render.Texture;
 
 import java.util.HashMap;
@@ -8,7 +9,8 @@ import java.util.Map;
 
 public class AssetPool {
     public static Map<String, Shader> SHADERS = new HashMap<>();
-    private static Map<String, Texture> TEXTURES = new HashMap<>();
+    public static Map<String, Texture> TEXTURES = new HashMap<>();
+    private static Map<String, Spritesheet> SPRITESHEETS = new HashMap<>();
 
     public static Shader getShader(String id) {
         if (SHADERS.containsKey(id)) {
@@ -24,5 +26,16 @@ public class AssetPool {
         } else {
             return TEXTURES.put(id, new Texture(id));
         }
+    }
+
+    public static void addSpritesheet(String id, Spritesheet sheet) {
+        if (!SPRITESHEETS.containsKey(id)) SPRITESHEETS.put(id, sheet);
+    }
+    public static void addSpritesheet(String id, int width, int length) {
+        addSpritesheet(id, new Spritesheet(id, width, length));
+    }
+
+    public static Spritesheet getSpritesheet(String id) {
+        return SPRITESHEETS.getOrDefault(id, null);
     }
 }

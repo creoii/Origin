@@ -7,6 +7,7 @@ import creoii.origin.core.display.scene.TitleScene;
 import creoii.origin.core.display.scene.WorldScene;
 import creoii.origin.core.input.KeyListener;
 import creoii.origin.core.input.MouseListener;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWImage;
@@ -80,10 +81,10 @@ public class Window {
         glfwWindow = glfwCreateWindow(width, height, title, MemoryUtil.NULL, MemoryUtil.NULL);
         if (glfwWindow == MemoryUtil.NULL) throw new IllegalStateException("Unable to create window");
 
-        ByteBuffer windowBuf = STBImage.stbi_load("src/main/resources/origin/assets/icon_x24.png", new int[]{1}, new int[]{1}, new int[]{1}, 0);
-        ByteBuffer taskbarBuf = STBImage.stbi_load("src/main/resources/origin/assets/icon_x48.png", new int[]{1}, new int[]{1}, new int[]{1}, 0);
+        ByteBuffer windowBuf = STBImage.stbi_load("src/main/resources/origin/assets/icon_x24.png", BufferUtils.createIntBuffer(1), BufferUtils.createIntBuffer(1), BufferUtils.createIntBuffer(1), 0);
+        ByteBuffer taskbarBuf = STBImage.stbi_load("src/main/resources/origin/assets/icon_x48.png", BufferUtils.createIntBuffer(1), BufferUtils.createIntBuffer(1), BufferUtils.createIntBuffer(1), 0);
         if (windowBuf != null && taskbarBuf != null) {
-            glfwSetWindowIcon(glfwWindow, GLFWImage.malloc(2).put(GLFWImage.malloc().set(24, 24, windowBuf)).put(GLFWImage.malloc().set(48, 48, taskbarBuf)).flip());
+            glfwSetWindowIcon(glfwWindow, GLFWImage.malloc(2).put(GLFWImage.malloc().set(24, 24, windowBuf)).flip().put(GLFWImage.malloc().set(48, 48, taskbarBuf)).flip());
             STBImage.stbi_image_free(windowBuf);
             STBImage.stbi_image_free(taskbarBuf);
         }

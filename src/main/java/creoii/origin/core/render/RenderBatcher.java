@@ -33,7 +33,7 @@ public class RenderBatcher {
     private List<Texture> textures;
     private int[] texSlots = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
     private SpriteRenderer[] sprites;
-    private int numSprites;
+    private int spriteCount;
     private boolean hasRoom;
     private float[] vertices;
 
@@ -49,7 +49,7 @@ public class RenderBatcher {
         this.maxBatchSize = maxBatchSize;
         vertices = new float[maxBatchSize * 4 * VERTEX_SIZE];
 
-        numSprites = 0;
+        spriteCount = 0;
         hasRoom = true;
     }
 
@@ -82,9 +82,9 @@ public class RenderBatcher {
     }
 
     public void addSprite(SpriteRenderer sprite) {
-        int index = this.numSprites;
-        this.sprites[index] = sprite;
-        this.numSprites++;
+        int index = spriteCount;
+        sprites[index] = sprite;
+        spriteCount++;
 
         if (sprite.getTexture() != null) {
             if (!textures.contains(sprite.getTexture())) textures.add(sprite.getTexture());
@@ -92,12 +92,23 @@ public class RenderBatcher {
 
         loadVertexProperties(index);
 
-        if (numSprites >= maxBatchSize) hasRoom = false;
+        if (spriteCount >= maxBatchSize) hasRoom = false;
     }
 
     public void render() {
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        boolean rebuffer = false;
+        for (int i = 0; i < spriteCount; ++i) {
+            if (sprites[i].isDirty()) {
+                loadVertexProperties(i);
+                sprites[i].setDirty(false);
+                rebuffer = true;
+            }
+        }
+
+        if (rebuffer) {
+            glBindBuffer(GL_ARRAY_BUFFER, vboID);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        }
 
         shader.use();
         shader.uploadMat4f("uProjection", Window.get().getScene().getCamera().getProjectionMatrix());
@@ -113,7 +124,7 @@ public class RenderBatcher {
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
 
-        glDrawElements(GL_TRIANGLES, this.numSprites * 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, spriteCount * 6, GL_UNSIGNED_INT, 0);
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
@@ -192,6 +203,12 @@ public class RenderBatcher {
     }
 
     public boolean hasRoom() {
-        return this.hasRoom;
+        return hasRoom;
+    }
+
+    public boolean hasRoomForTextures() { return textures.size() < 8; }
+
+    public boolean hasTexture(Texture texture) {
+        return textures.contains(texture);
     }
 }
