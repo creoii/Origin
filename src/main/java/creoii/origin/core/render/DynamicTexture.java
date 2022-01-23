@@ -44,10 +44,7 @@ public class DynamicTexture {
 
         int bufferSize = 0;
         try {
-            for (Texture texture : textures) {
-                bufferSize += Files.size(Path.of(texture.getPath()));
-                System.out.println(bufferSize);
-            }
+            for (Texture texture : textures) bufferSize += Files.size(Path.of(texture.getPath()));
         } catch (IOException e) {
             Main.LOGGER.warning("Unable to get size of sub-texture of ".concat(path));
         }
@@ -63,7 +60,6 @@ public class DynamicTexture {
         } else if (channels.get(0) == 4) {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0), 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
         } else Main.LOGGER.info("Unknown number of channels from ".concat(path));
-        System.out.println("load4");
     }
 
     public String getPath() { return path; }

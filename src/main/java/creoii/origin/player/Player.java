@@ -1,5 +1,7 @@
 package creoii.origin.player;
 
+import creoii.origin.core.display.Window;
+import creoii.origin.core.game.Collider;
 import creoii.origin.core.game.GameSettings;
 import creoii.origin.core.game.Transform;
 import creoii.origin.core.input.KeyListener;
@@ -16,6 +18,7 @@ public class Player {
     private int characterSlots = 2;
     private List<Character> characters = new ArrayList<>();
     private DynamicSpriteRenderer sprite;
+    private Collider collider;
 
     public Player(String name) {
         this.name = name;
@@ -23,12 +26,14 @@ public class Player {
 
     public void init() {
         sprite = new DynamicSpriteRenderer(new Transform(new Vector2f(100f, 100f), new Vector2f(50f, 50f)), AssetPool.getSpritesheet(Spritesheet.X8_SHEET).getSprite(0));
+        collider = new Collider(sprite.getTransform().getPosition(), 20);
     }
 
     public String getName() { return name; }
     public int getCharacterSlots() { return characterSlots; }
     public List<Character> getCharacters() { return characters; }
     public DynamicSpriteRenderer getSpriteRenderer() { return sprite; }
+    public Collider getCollider() { return collider; }
 
     public void addCharacterSlot() { ++characterSlots; }
 
@@ -49,5 +54,6 @@ public class Player {
         if (KeyListener.isKeyPressed(GameSettings.MOVE_LEFT)) sprite.getTransform().getPosition().add(deltaTime * -250f, 0f);
 
         sprite.update(deltaTime);
+        if (!collider.getPos().equals(sprite.getTransform().getPosition())) collider.setPos(sprite.getTransform().getPosition());
     }
 }
