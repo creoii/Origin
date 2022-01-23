@@ -1,7 +1,7 @@
 package creoii.origin.core.util;
 
 import creoii.origin.core.render.Shader;
-import creoii.origin.core.render.Spritesheet;
+import creoii.origin.core.render.sprite.Spritesheet;
 import creoii.origin.core.render.Texture;
 
 import java.util.HashMap;

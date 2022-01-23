@@ -1,6 +1,8 @@
-package creoii.origin.core.render;
+package creoii.origin.core.render.sprite;
 
 import creoii.origin.core.Main;
+import creoii.origin.core.render.DynamicTexture;
+import creoii.origin.core.render.Texture;
 import org.joml.Vector2f;
 
 import java.io.IOException;

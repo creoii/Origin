@@ -3,8 +3,8 @@ package creoii.origin.player;
 import creoii.origin.core.game.GameSettings;
 import creoii.origin.core.game.Transform;
 import creoii.origin.core.input.KeyListener;
-import creoii.origin.core.render.DynamicSpriteRenderer;
-import creoii.origin.core.render.Spritesheet;
+import creoii.origin.core.render.sprite.DynamicSpriteRenderer;
+import creoii.origin.core.render.sprite.Spritesheet;
 import creoii.origin.core.util.AssetPool;
 import org.joml.Vector2f;
 

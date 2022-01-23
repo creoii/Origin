@@ -1,6 +1,7 @@
 package creoii.origin.core.render;
 
 import creoii.origin.core.Main;
+import org.apache.commons.math3.util.FastMath;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBImage;
 
@@ -36,18 +37,21 @@ public class DynamicTexture {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-        IntBuffer width = BufferUtils.createIntBuffer(1).put(((textures.size() / 2) + 1) * textureWidth);
-        IntBuffer height = BufferUtils.createIntBuffer(1).put(((textures.size() / 2) + 1) * textureHeight);
+        IntBuffer width = BufferUtils.createIntBuffer(1).put((int) FastMath.round(FastMath.sqrt(textures.size())) * textureWidth);
+        IntBuffer height = BufferUtils.createIntBuffer(1).put((int) FastMath.round(FastMath.sqrt(textures.size())) * textureHeight);
         IntBuffer channels = BufferUtils.createIntBuffer(1).put(4);
         STBImage.stbi_set_flip_vertically_on_load(true);
 
         int bufferSize = 0;
         try {
-            for (Texture texture : textures) bufferSize += Files.size(Path.of(texture.getPath()));
+            for (Texture texture : textures) {
+                bufferSize += Files.size(Path.of(texture.getPath()));
+                System.out.println(bufferSize);
+            }
         } catch (IOException e) {
             Main.LOGGER.warning("Unable to get size of sub-texture of ".concat(path));
         }
-        ByteBuffer image = BufferUtils.createByteBuffer(bufferSize * 4);
+        ByteBuffer image = BufferUtils.createByteBuffer(bufferSize);
         for (Texture texture : textures) {
             image.put(STBImage.stbi_load(texture.getPath(), BufferUtils.createIntBuffer(1), BufferUtils.createIntBuffer(1), BufferUtils.createIntBuffer(1), 4).flip());
         }
@@ -59,6 +63,7 @@ public class DynamicTexture {
         } else if (channels.get(0) == 4) {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0), 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
         } else Main.LOGGER.info("Unknown number of channels from ".concat(path));
+        System.out.println("load4");
     }
 
     public String getPath() { return path; }

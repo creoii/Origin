@@ -15,7 +15,7 @@ public class Region {
 
         for (int i = 0; i < tiles.length; ++i) {
             for (int j = 0; j < tiles[i].length; ++j) {
-                tiles[i][j] = new Tile("rock.png");
+                tiles[i][j] = new Tile("creo_ground0.png");
             }
         }
     }

@@ -2,6 +2,8 @@ package creoii.origin.core.render;
 
 import creoii.origin.core.display.Window;
 import creoii.origin.core.game.Transform;
+import creoii.origin.core.render.sprite.DynamicSpriteRenderer;
+import creoii.origin.core.render.sprite.SpriteRenderer;
 import creoii.origin.core.util.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector4f;

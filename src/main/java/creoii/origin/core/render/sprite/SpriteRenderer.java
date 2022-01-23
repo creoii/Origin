@@ -1,6 +1,7 @@
-package creoii.origin.core.render;
+package creoii.origin.core.render.sprite;
 
 import creoii.origin.core.game.Transform;
+import creoii.origin.core.render.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 

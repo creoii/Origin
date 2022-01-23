@@ -1,6 +1,6 @@
 package creoii.origin.data;
 
-import creoii.origin.core.render.Spritesheet;
+import creoii.origin.core.render.sprite.Spritesheet;
 import creoii.origin.core.render.Texture;
 import creoii.origin.core.util.AssetPool;
 import creoii.origin.core.util.FileUtil;

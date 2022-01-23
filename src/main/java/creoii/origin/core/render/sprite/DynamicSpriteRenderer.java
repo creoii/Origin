@@ -1,4 +1,4 @@
-package creoii.origin.core.render;
+package creoii.origin.core.render.sprite;
 
 import creoii.origin.core.game.Transform;
 import org.joml.Vector2f;

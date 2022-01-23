@@ -1,5 +1,6 @@
-package creoii.origin.core.render;
+package creoii.origin.core.render.sprite;
 
+import creoii.origin.core.render.Texture;
 import org.joml.Vector2f;
 
 public class Sprite {
