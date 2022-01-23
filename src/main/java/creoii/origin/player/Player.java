@@ -25,8 +25,8 @@ public class Player {
     }
 
     public void init() {
-        sprite = new DynamicSpriteRenderer(new Transform(new Vector2f(100f, 100f), new Vector2f(50f, 50f)), AssetPool.getSpritesheet(Spritesheet.X8_SHEET).getSprite(0));
-        collider = new Collider(sprite.getTransform().getPosition(), 20);
+        sprite = new DynamicSpriteRenderer(new Transform(new Vector2f(600f, 325f), new Vector2f(50f, 50f)), AssetPool.getSpritesheet(Spritesheet.X8_SHEET).getSprite(0));
+        collider = new Collider(sprite.getTransform().getPosition(), 10);
     }
 
     public String getName() { return name; }

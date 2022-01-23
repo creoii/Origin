@@ -15,9 +15,8 @@ public class Collider {
 
     public Collider(Vector2f pos, int size) {
         this.pos = pos;
-        float half = size / 2f;
-        min = new Vector2f(-half, -half);
-        max = new Vector2f(half, half);
+        min = new Vector2f(-size, -size);
+        max = new Vector2f(size, size);
     }
 
     public Vector2f getPos() { return pos; }
@@ -31,16 +30,14 @@ public class Collider {
     }
 
     public Collider expand(int size) {
-        float half = size / 2f;
-        min = min.sub(half, half);
-        max = max.add(half, half);
+        min = min.sub(size, size);
+        max = max.add(size, size);
         return this;
     }
 
     public Collider contract(int size) {
-        float half = size / 2f;
-        min = min.add(half, half);
-        max = max.sub(half, half);
+        min = min.add(size, size);
+        max = max.sub(size, size);
         return this;
     }
 }
