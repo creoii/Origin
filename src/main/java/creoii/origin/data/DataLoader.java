@@ -1,7 +1,7 @@
 package creoii.origin.data;
 
-import creoii.origin.core.render.sprite.Spritesheet;
 import creoii.origin.core.render.Texture;
+import creoii.origin.core.render.sprite.Spritesheet;
 import creoii.origin.core.util.AssetPool;
 import creoii.origin.core.util.FileUtil;
 
@@ -23,8 +23,8 @@ public class DataLoader {
             });
         });
 
-        Spritesheet x8 = new Spritesheet("src/main/resources/origin/assets/spritesheets/sprites_x8.png", 8, 8);
-        Spritesheet x16 = new Spritesheet("src/main/resources/origin/assets/spritesheets/sprites_x16.png", 16, 16);
+        Spritesheet x8 = new Spritesheet("src/main/resources/origin/assets/spritesheets/sprites_8x8.png", 8, 8);
+        Spritesheet x16 = new Spritesheet("src/main/resources/origin/assets/spritesheets/sprites_16x16.png", 16, 16);
         for (Texture texture : AssetPool.TEXTURES.values()){
             // 8x8 textures
             if (texture.getWidth() == 8 && texture.getHeight() == 8) {

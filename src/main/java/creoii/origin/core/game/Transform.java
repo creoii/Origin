@@ -17,7 +17,7 @@ public class Transform {
 
     public Transform copy() { return new Transform(position, scale); }
 
-    public void copy(Transform to) {
+    public void copyTo(Transform to) {
         to.position.set(position);
         to.scale.set(scale);
     }

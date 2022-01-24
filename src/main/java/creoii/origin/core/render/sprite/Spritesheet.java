@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Spritesheet {
-    public static final String X8_SHEET = "src/main/resources/origin/assets/spritesheets/sprites_x8.png";
-    public static final String X16_SHEET = "src/main/resources/origin/assets/spritesheets/sprites_x16.png";
+    public static final String X8_SHEET = "src/main/resources/origin/assets/spritesheets/sprites_8x8.png";
+    public static final String X16_SHEET = "src/main/resources/origin/assets/spritesheets/sprites_16x16.png";
 
     private DynamicTexture texture;
     private List<Sprite> sprites;

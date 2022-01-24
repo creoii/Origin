@@ -34,6 +34,7 @@ public class SpriteRenderer {
     }
     public Texture getTexture() { return texture; }
     public Vector2f[] getTexCoords() { return texCoords; }
+    public Sprite getSprite() { return sprite; }
     public Transform getTransform() { return transform; }
     public boolean isDynamic() { return false; }
 }

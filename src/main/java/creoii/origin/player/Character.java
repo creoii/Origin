@@ -23,9 +23,9 @@ public class Character {
         transform = new Transform(new Vector2f(), new Vector2f());
     }
 
-    public Class getClazz() { return clazz; }
-    public float getHealth() { return health; }
-    public float getMana() { return mana; }
+    public Class getCharacterClass() { return clazz; }
+    public float getCurrentHealth() { return health; }
+    public float getCurrentMana() { return mana; }
     public int getLevel() { return level; }
     public int getXp() { return xp; }
 

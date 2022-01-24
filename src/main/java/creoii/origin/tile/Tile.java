@@ -2,7 +2,6 @@ package creoii.origin.tile;
 
 import creoii.origin.core.game.Transform;
 import creoii.origin.core.render.sprite.SpriteRenderer;
-import creoii.origin.core.render.sprite.Spritesheet;
 import creoii.origin.core.util.AssetPool;
 import creoii.origin.data.Identifiable;
 import org.joml.Vector2f;
@@ -16,7 +15,7 @@ public class Tile implements Identifiable {
     }
 
     public Tile init(Vector2f position) {
-        sprite = new SpriteRenderer(new Transform(position, new Vector2f(20, 20)), AssetPool.getSpritesheet(Spritesheet.X8_SHEET).getSprite("src/main/resources/origin/assets/textures/tiles/".concat(id)));
+        sprite = new SpriteRenderer(new Transform(position, new Vector2f(20, 20)), AssetPool.getTileSprite(id));
         return this;
     }
 

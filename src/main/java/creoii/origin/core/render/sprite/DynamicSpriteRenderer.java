@@ -18,25 +18,24 @@ public class DynamicSpriteRenderer extends SpriteRenderer {
 
     public boolean isDirty() { return dirty; }
     public void setDirty(boolean dirty) { this.dirty = dirty; }
-    @Override
-    public boolean isDynamic() { return true; }
+    @Override public boolean isDynamic() { return true; }
 
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
-        dirty = true;
+        setDirty(true);
     }
 
     public void setColor(Vector4f color) {
         if (!this.color.equals(color)) {
             this.color.set(color);
-            dirty = true;
+            setDirty(true);
         }
     }
 
     public void update(double deltaTime) {
         if (!lastTransform.equals(getTransform())) {
-            dirty = true;
+            setDirty(true);
         }
-        getTransform().copy(lastTransform);
+        getTransform().copyTo(lastTransform);
     }
 }

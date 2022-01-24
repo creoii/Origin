@@ -6,16 +6,19 @@ import org.joml.Vector2f;
 import java.util.function.Consumer;
 
 public class Region {
+    //                   default = 32
+    public static final int SIZE = 16;
     private Tile[][] tiles;
-    private Vector2f position;
+    private final Vector2f position;
 
     public Region(Vector2f position) {
         this.position = position;
-        tiles = new Tile[32][32];
+        tiles = new Tile[SIZE][SIZE];
 
-        for (int i = 0; i < tiles.length; ++i) {
-            for (int j = 0; j < tiles[i].length; ++j) {
-                tiles[i][j] = new Tile("creo_ground0.png");
+        for (int i = 0; i < SIZE; ++i) {
+            for (int j = 0; j < SIZE; ++j) {
+        //        System.out.println("create tile");
+                tiles[i][j] = new Tile("lava0.png");
             }
         }
     }

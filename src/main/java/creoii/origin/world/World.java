@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 public class World {
     private final WorldSize size;
-    private Region[][] regions;
+    private final Region[][] regions;
 
     public World(WorldSize size) {
         this.size = size;
@@ -19,6 +19,7 @@ public class World {
         }
     }
 
+    public WorldSize getSize() { return size; }
     public Region[][] getRegions() { return regions; }
 
     public void forEachRegion(Consumer<Region> action) {
@@ -31,8 +32,8 @@ public class World {
 
     public enum WorldSize {
         SMALL(1),
-        MEDIUM(3),
-        LARGE(5);
+        MEDIUM(2),
+        LARGE(3);
 
         private final int size;
 

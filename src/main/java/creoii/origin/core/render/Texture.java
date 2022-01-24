@@ -4,16 +4,21 @@ import creoii.origin.core.Main;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBImage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 
 public class Texture {
-    private String path;
-    private int id;
+    private final String path;
+    private final int id;
     private int width, height;
-    private ByteBuffer image;
+    private final ByteBuffer image;
+    private BufferedImage bufferedImage;
 
     public Texture(String path) {
         this.path = path;
@@ -53,6 +58,21 @@ public class Texture {
     public int getHeight() { return height; }
 
     public ByteBuffer getImage() { return image; }
+
+    public BufferedImage toBufferedImage() {
+        if (bufferedImage == null) {
+            if (image.hasArray()) {
+                ByteArrayInputStream bytes = new ByteArrayInputStream(image.array());
+                try {
+                    bufferedImage = ImageIO.read(bytes);
+                } catch (IOException e) {
+                    Main.LOGGER.warning("Unable to convert texture ".concat(path).concat(" to an image."));
+                }
+            } else return null;
+        }
+
+        return bufferedImage;
+    }
 
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, id);
