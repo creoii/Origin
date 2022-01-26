@@ -1,5 +1,6 @@
 package creoii.origin.core.util;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class JsonUtil {
@@ -25,5 +26,9 @@ public class JsonUtil {
 
     public static float getFloat(JsonObject object, String name, float fallback) {
         return object.has(name) ? object.get(name).getAsFloat() : fallback;
+    }
+
+    public static JsonArray getArray(JsonObject object, String name) {
+        return object.has(name) ? object.getAsJsonArray(name) : null;
     }
 }

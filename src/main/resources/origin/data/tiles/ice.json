@@ -1,0 +1,8 @@
+{
+  "id": "ice",
+  "textures": [
+    "ice0",
+    "ice1"
+  ],
+  "stat_modifier": {}
+}

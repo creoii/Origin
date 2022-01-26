@@ -46,7 +46,7 @@ public class JsonObjects {
                 int maxMana = JsonUtil.getInt(object1, "max_mana", 0);
                 int speed = JsonUtil.getInt(object1, "speed", 0);
                 int attackSpeed = JsonUtil.getInt(object1, "attack_speed", 0);
-                int healthRegen = JsonUtil.getInt(object1, "health_regen", 1);
+                int healthRegen = JsonUtil.getInt(object1, "health_regen", 0);
                 int manaRegen = JsonUtil.getInt(object1, "mana_regen", 0);
                 int attack = JsonUtil.getInt(object1, "attack", 0);
                 int armor = JsonUtil.getInt(object1, "armor", 0);

@@ -12,6 +12,7 @@ public class DataLoader {
     public static final List<DataBuilder<?>> BUILDERS = new ArrayList<>();
     public static final ItemBuilder ITEMS = new ItemBuilder();
     public static final ClassBuilder CLASSES = new ClassBuilder();
+    public static final TileBuilder TILES = new TileBuilder();
 
     public void loadResources() {
         long startTime = System.nanoTime();

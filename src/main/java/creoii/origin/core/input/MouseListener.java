@@ -45,30 +45,30 @@ public class MouseListener {
         instance.scrollY = yOffset;
     }
 
-    public double getX() {
+    public static double getX() {
         return instance.mouseX;
     }
-    public double getY() {
+    public static double getY() {
         return instance.mouseY;
     }
-    public Vector2f getMousePos() { return instance.mousePos; }
-    public Vector2f getLastMousePos() { return instance.lastMousePos; }
+    public static Vector2f getMousePos() { return instance.mousePos; }
+    public static Vector2f getLastMousePos() { return instance.lastMousePos; }
     // not working
-    public boolean isMoving() { return instance.mousePos.x != instance.lastMousePos.x || instance.mousePos.y != instance.lastMousePos.y; }
-    public double getDX() { return instance.lastX - instance.mouseX; }
-    public double getDY() {
+    public static boolean isMoving() { return instance.mousePos.x != instance.lastMousePos.x || instance.mousePos.y != instance.lastMousePos.y; }
+    public static double getDX() { return instance.lastX - instance.mouseX; }
+    public static double getDY() {
         return instance.lastY - instance.mouseX;
     }
-    public boolean isDragging() {
+    public static boolean isDragging() {
         return instance.dragging;
     }
-    public boolean mouseButtonDown(int button) {
+    public static boolean mouseButtonDown(int button) {
         return instance.mouseButtonDown[button];
     }
-    public double getScrollX() {
-        return scrollX;
+    public static double getScrollX() {
+        return instance.scrollX;
     }
-    public double getScrollY() {
-        return scrollY;
+    public static double getScrollY() {
+        return instance.scrollY;
     }
 }

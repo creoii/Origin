@@ -6,6 +6,7 @@ import creoii.origin.core.Main;
 import creoii.origin.core.util.FileUtil;
 import creoii.origin.item.Item;
 import creoii.origin.player.Class;
+import creoii.origin.tile.Tile;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,9 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class DataBuilder<T extends Identifiable> {
-    protected final Gson GSON = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Item.class, new Item.Serializer()).registerTypeAdapter(Class.class, new Class.Serializer()).create();
+    protected final Gson GSON = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Item.class, new Item.Serializer()).registerTypeAdapter(Class.class, new Class.Serializer()).registerTypeAdapter(Tile.class, new Tile.Serializer()).create();
     private final Map<String, T> values = new HashMap<>();
     private final String path;
+
+    private T cachedValue = null;
 
     public DataBuilder(String name) {
         path = "origin/data/".concat(name).concat("/");
@@ -44,10 +47,14 @@ public abstract class DataBuilder<T extends Identifiable> {
     }
 
     public T getObject(String id) {
-        for (String s : values.keySet()) {
-            if (s.equals(id)) return values.get(s);
+        if (cachedValue != null) {
+            if (cachedValue.getId().equals(id)) return cachedValue;
         }
-        return null;
+
+        for (String s : values.keySet()) {
+            if (s.equals(id)) return cachedValue = values.get(s);
+        }
+        return cachedValue = null;
     }
 
     public Map<String, T> getValues() {

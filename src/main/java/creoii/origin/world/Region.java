@@ -1,5 +1,6 @@
 package creoii.origin.world;
 
+import creoii.origin.data.DataLoader;
 import creoii.origin.tile.Tile;
 import org.joml.Vector2f;
 
@@ -17,8 +18,7 @@ public class Region {
 
         for (int i = 0; i < SIZE; ++i) {
             for (int j = 0; j < SIZE; ++j) {
-        //        System.out.println("create tile");
-                tiles[i][j] = new Tile("lava0.png");
+                tiles[i][j] = DataLoader.TILES.getObject("ice");
             }
         }
     }
