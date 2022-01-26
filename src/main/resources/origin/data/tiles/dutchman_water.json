@@ -1,7 +1,7 @@
 {
-  "id": "lava",
+  "id": "dutchman_water",
   "textures": [
-    "lava0"
+    "dutchman_water"
   ],
   "stat_modifier": {
     "speed": -5

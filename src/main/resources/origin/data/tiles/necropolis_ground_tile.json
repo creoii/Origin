@@ -1,0 +1,9 @@
+{
+  "id": "necropolis_ground_tile",
+  "textures": [
+    "necropolis_ground_tile0",
+    "necropolis_ground_tile1",
+    "necropolis_ground_tile2",
+    "necropolis_ground_tile3"
+  ]
+}

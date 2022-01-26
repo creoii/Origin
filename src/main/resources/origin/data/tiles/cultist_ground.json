@@ -1,0 +1,13 @@
+{
+  "id": "cultist_ground",
+  "textures": [
+    "cultist_ground0",
+    "cultist_ground1",
+    "cultist_ground2",
+    "cultist_ground3",
+    "cultist_ground4",
+    "cultist_ground5",
+    "cultist_ground6",
+    "cultist_ground7"
+  ]
+}

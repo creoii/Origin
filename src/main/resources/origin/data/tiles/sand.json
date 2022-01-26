@@ -1,7 +1,8 @@
 {
-  "id": "lava",
+  "id": "sand",
   "textures": [
-    "lava0"
+    "sand0",
+    "sand1"
   ],
   "stat_modifier": {
     "speed": -5

@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 
 public class Region {
     //                   default = 32
-    public static final int SIZE = 16;
+    public static final int SIZE = 32;
     private Tile[][] tiles;
     private final Vector2f position;
 
@@ -18,7 +18,7 @@ public class Region {
 
         for (int i = 0; i < SIZE; ++i) {
             for (int j = 0; j < SIZE; ++j) {
-                tiles[i][j] = DataLoader.TILES.getObject("ice");
+                tiles[i][j] = DataLoader.TILES.getObject("hell_ground");
             }
         }
     }

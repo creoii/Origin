@@ -1,0 +1,11 @@
+{
+  "id": "storm_ground",
+  "textures": [
+    "storm_ground0",
+    "storm_ground1",
+    "storm_ground2",
+    "storm_ground3",
+    "storm_ground4",
+    "storm_ground5"
+  ]
+}
