@@ -60,7 +60,7 @@ public class RenderBatcher {
 
         vboID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
 
         int eboID = glGenBuffers();
         int[] indices = generateIndices();
@@ -158,13 +158,9 @@ public class RenderBatcher {
         float xAdd = 1.0f;
         float yAdd = 1.0f;
         for (int i = 0; i < 4; ++i) {
-            if (i == 1) {
-                yAdd = 0.0f;
-            } else if (i == 2) {
-                xAdd = 0.0f;
-            } else if (i == 3) {
-                yAdd = 1.0f;
-            }
+            if (i == 1) yAdd = 0.0f;
+            else if (i == 2) xAdd = 0.0f;
+            else if (i == 3) yAdd = 1.0f;
 
             Transform transform = sprite.getTransform();
             vertices[offset] = transform.getPosition().x + (xAdd * transform.getScale().x);

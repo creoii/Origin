@@ -22,6 +22,7 @@ public class DynamicSpriteRenderer extends SpriteRenderer {
 
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
+        setTexture(sprite.getTexture());
         setDirty(true);
     }
 

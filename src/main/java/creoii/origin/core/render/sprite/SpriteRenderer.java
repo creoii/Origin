@@ -23,6 +23,7 @@ public class SpriteRenderer {
         texture = sprite.getTexture();
         texCoords = sprite.getTexCoords();
         color = tint;
+        this.sprite = sprite;
     }
 
     public SpriteRenderer(Transform transform, Sprite sprite) {
@@ -37,4 +38,6 @@ public class SpriteRenderer {
     public Sprite getSprite() { return sprite; }
     public Transform getTransform() { return transform; }
     public boolean isDynamic() { return false; }
+
+    public void setTexture(Texture texture) { this.texture = texture; }
 }

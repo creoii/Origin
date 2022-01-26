@@ -1,5 +1,6 @@
 package creoii.origin.core.render;
 
+import creoii.origin.core.render.sprite.DynamicSpriteRenderer;
 import creoii.origin.core.render.sprite.SpriteRenderer;
 
 import java.util.ArrayList;
