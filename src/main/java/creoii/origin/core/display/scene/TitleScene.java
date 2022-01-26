@@ -3,7 +3,6 @@ package creoii.origin.core.display.scene;
 import creoii.origin.core.display.camera.Camera;
 import creoii.origin.core.game.Game;
 import creoii.origin.tile.Tile;
-import creoii.origin.tile.Tile1;
 import creoii.origin.world.Region;
 import org.joml.Vector2f;
 

@@ -1,7 +1,6 @@
 package creoii.origin.data;
 
 import com.google.gson.Gson;
-import creoii.origin.player.Class;
 import creoii.origin.tile.Tile;
 
 import java.io.Reader;

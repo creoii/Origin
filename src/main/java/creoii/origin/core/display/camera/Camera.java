@@ -1,5 +1,6 @@
 package creoii.origin.core.display.camera;
 
+import creoii.origin.core.Main;
 import creoii.origin.core.game.GameSettings;
 import creoii.origin.core.input.KeyListener;
 import org.joml.Matrix4f;
@@ -7,13 +8,14 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class Camera {
-    private final Matrix4f projectionMatrix, viewMatrix;
-    private Vector2f position;
+    private final Matrix4f projectionMatrix, viewMatrix, frustumMatrix;
+    private final Vector2f position;
 
     public Camera(Vector2f position) {
         this.position = position;
-        this.projectionMatrix = new Matrix4f();
-        this.viewMatrix = new Matrix4f();
+        projectionMatrix = new Matrix4f();
+        viewMatrix = new Matrix4f();
+        frustumMatrix = new Matrix4f().identity().frustum(0f, 32f * 40f, 0f, 32f * 21f, 0f, 100f);
         adjustProjection();
     }
 
@@ -30,9 +32,15 @@ public class Camera {
     public Matrix4f getProjectionMatrix() {
         return projectionMatrix;
     }
-
     public Vector2f getPosition() {
         return position;
+    }
+
+    public boolean isWithinView(Vector2f pos) {
+        if (Main.RANDOM.nextInt(25) == 0) {
+            //System.out.println(frustumMatrix.toString());
+        }
+        return true;
     }
 
     public void update(float deltaTime) {

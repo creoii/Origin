@@ -44,11 +44,14 @@ public class Tile implements Identifiable {
                 JsonObject object = json.getAsJsonObject();
                 String id = JsonUtil.getString(object, "id");
                 JsonArray textures = JsonUtil.getArray(object, "textures");
-                String[] ret = new String[textures.size()];
-                for (int i = 0; i < textures.size(); ++i) {
-                    ret[i] = textures.get(i).getAsString();
+                String[] ret;
+                if (textures != null && textures.size() > 0) {
+                    ret = new String[textures.size()];
+                    for (int i = 0; i < textures.size(); ++i) {
+                        ret[i] = textures.get(i).getAsString();
+                    }
                 }
-                if (ret.length == 0) ret = new String[]{id};
+                else ret = new String[]{id};
                 if (object.has("stat_modifier")) {
                     JsonObjects.StatData statModifier = JsonObjects.StatData.deserialize(object, "stat_modifier");
                     return new Tile1(id, ret, statModifier);

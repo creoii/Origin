@@ -1,6 +1,7 @@
 package creoii.origin.core.render;
 
 import creoii.origin.core.display.Window;
+import creoii.origin.core.display.camera.Camera;
 import creoii.origin.core.game.Transform;
 import creoii.origin.core.render.sprite.DynamicSpriteRenderer;
 import creoii.origin.core.render.sprite.SpriteRenderer;
@@ -30,6 +31,8 @@ public class RenderBatcher {
     private final int TEX_ID_OFFSET = TEX_COORDS_OFFSET + TEX_COORDS_SIZE * Float.BYTES;
     private final int VERTEX_SIZE = 9;
     private final int VERTEX_BYTES = VERTEX_SIZE * Float.BYTES;
+
+    private final Camera camera = Window.get().getScene().getCamera();
 
     private List<Texture> textures;
     private int[] texSlots = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
@@ -99,13 +102,21 @@ public class RenderBatcher {
     public void render() {
         boolean rebuffer = false;
         for (int i = 0; i < spriteCount; ++i) {
-            if (sprites[i].isDynamic()) {
-                if (((DynamicSpriteRenderer) sprites[i]).isDirty()) {
+            SpriteRenderer spriteRenderer = sprites[i];
+            if (spriteRenderer.isDynamic()) {
+                if (((DynamicSpriteRenderer) spriteRenderer).isDirty()) {
                     loadVertexProperties(i);
-                    ((DynamicSpriteRenderer) sprites[i]).setDirty(false);
+                    ((DynamicSpriteRenderer) spriteRenderer).setDirty(false);
                     rebuffer = true;
                 }
             }
+
+            // probably never going to actually work because regular sprite renderers cannot unrender... at least I don't think so
+            if (camera.isWithinView(spriteRenderer.getTransform().getPosition()) && !spriteRenderer.shouldRender()) {
+                spriteRenderer.setShouldRender(true);
+                loadVertexProperties(i);
+                rebuffer = true;
+            } else if (spriteRenderer.shouldRender()) { spriteRenderer.setShouldRender(false); }
         }
 
         if (rebuffer) {
@@ -114,8 +125,8 @@ public class RenderBatcher {
         }
 
         shader.use();
-        shader.uploadMat4f("uProjection", Window.get().getScene().getCamera().getProjectionMatrix());
-        shader.uploadMat4f("uView", Window.get().getScene().getCamera().getViewMatrix());
+        shader.uploadMat4f("uProjection", camera.getProjectionMatrix());
+        shader.uploadMat4f("uView", camera.getViewMatrix());
 
         for (int i = 0; i < textures.size(); ++i) {
             glActiveTexture(GL_TEXTURE0 + i + 1);
@@ -140,42 +151,44 @@ public class RenderBatcher {
 
     private void loadVertexProperties(int index) {
         SpriteRenderer sprite = this.sprites[index];
-        int offset = index * 4 * VERTEX_SIZE;
-        Vector4f color = sprite.getColor();
+        if (sprite.shouldRender()) {
+            int offset = index * 4 * VERTEX_SIZE;
+            Vector4f color = sprite.getColor();
 
-        Vector2f[] texCoords = sprite.getTexCoords();
-        int texId = 0;
+            Vector2f[] texCoords = sprite.getTexCoords();
+            int texId = 0;
 
-        if (sprite.getTexture() != null) {
-            for (int i = 0; i < textures.size(); ++i) {
-                if (textures.get(i) == sprite.getTexture()) {
-                    texId = i + 1;
-                    break;
+            if (sprite.getTexture() != null) {
+                for (int i = 0; i < textures.size(); ++i) {
+                    if (textures.get(i) == sprite.getTexture()) {
+                        texId = i + 1;
+                        break;
+                    }
                 }
             }
-        }
 
-        float xAdd = 1.0f;
-        float yAdd = 1.0f;
-        for (int i = 0; i < 4; ++i) {
-            if (i == 1) yAdd = 0.0f;
-            else if (i == 2) xAdd = 0.0f;
-            else if (i == 3) yAdd = 1.0f;
+            float xAdd = 1.0f;
+            float yAdd = 1.0f;
+            for (int i = 0; i < 4; ++i) {
+                if (i == 1) yAdd = 0.0f;
+                else if (i == 2) xAdd = 0.0f;
+                else if (i == 3) yAdd = 1.0f;
 
-            Transform transform = sprite.getTransform();
-            vertices[offset] = transform.getPosition().x + (xAdd * transform.getScale().x);
-            vertices[offset + 1] = transform.getPosition().y + (yAdd * transform.getScale().y);
+                Transform transform = sprite.getTransform();
+                vertices[offset] = transform.getPosition().x + (xAdd * transform.getScale().x);
+                vertices[offset + 1] = transform.getPosition().y + (yAdd * transform.getScale().y);
 
-            vertices[offset + 2] = color.x;
-            vertices[offset + 3] = color.y;
-            vertices[offset + 4] = color.z;
-            vertices[offset + 5] = color.w;
+                vertices[offset + 2] = color.x;
+                vertices[offset + 3] = color.y;
+                vertices[offset + 4] = color.z;
+                vertices[offset + 5] = color.w;
 
-            vertices[offset + 6] = texCoords[i].x;
-            vertices[offset + 7] = texCoords[i].y;
-            vertices[offset + 8] = texId;
+                vertices[offset + 6] = texCoords[i].x;
+                vertices[offset + 7] = texCoords[i].y;
+                vertices[offset + 8] = texId;
 
-            offset += VERTEX_SIZE;
+                offset += VERTEX_SIZE;
+            }
         }
     }
 

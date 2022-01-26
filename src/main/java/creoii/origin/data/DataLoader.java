@@ -40,6 +40,7 @@ public class DataLoader {
         x16.load();
         AssetPool.addSpritesheet(x8.getPath(), x8);
         AssetPool.addSpritesheet(x16.getPath(), x16);
+
         long endTime = System.nanoTime();
         System.out.println("Successfully loaded resources in ".concat(String.valueOf((endTime - startTime) / 1000000d)).concat(" ms"));
     }

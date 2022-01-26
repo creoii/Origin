@@ -11,6 +11,7 @@ public class SpriteRenderer {
     private Vector2f[] texCoords;
     protected Sprite sprite;
     private Transform transform;
+    private boolean shouldRender = false;
 
     public SpriteRenderer(Transform transform, Vector4f color) {
         this.transform = transform;
@@ -38,6 +39,8 @@ public class SpriteRenderer {
     public Sprite getSprite() { return sprite; }
     public Transform getTransform() { return transform; }
     public boolean isDynamic() { return false; }
+    public boolean shouldRender() { return shouldRender; }
+    public void setShouldRender(boolean shouldRender) { this.shouldRender = shouldRender; }
 
     public void setTexture(Texture texture) { this.texture = texture; }
 }

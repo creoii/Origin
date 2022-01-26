@@ -1,13 +1,12 @@
 package creoii.origin.core.render;
 
-import creoii.origin.core.render.sprite.DynamicSpriteRenderer;
 import creoii.origin.core.render.sprite.SpriteRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Renderer {
-    private final int MAX_BATCH_SIZE = 1000;
+    private final int MAX_BATCH_SIZE = 2000;
     private List<RenderBatcher> batches;
 
     public Renderer() {
