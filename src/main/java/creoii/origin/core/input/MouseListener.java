@@ -1,5 +1,7 @@
 package creoii.origin.core.input;
 
+import creoii.origin.core.display.Window;
+import creoii.origin.core.display.camera.Camera;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
@@ -53,6 +55,10 @@ public class MouseListener {
     }
     public static Vector2f getMousePos() { return instance.mousePos; }
     public static Vector2f getLastMousePos() { return instance.lastMousePos; }
+    public static Vector2f getMousePosWorldSpace() {
+        Vector2f camPos = Window.get().getScene().getCamera().getPosition();
+        return new Vector2f((float) getX() + camPos.x + 88f, (float) getY() + camPos.y + 20f);
+    }
     // not working
     public static boolean isMoving() { return instance.mousePos.x != instance.lastMousePos.x || instance.mousePos.y != instance.lastMousePos.y; }
     public static double getDX() { return instance.lastX - instance.mouseX; }

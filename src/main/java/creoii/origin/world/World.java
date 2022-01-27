@@ -1,16 +1,21 @@
 package creoii.origin.world;
 
+import creoii.origin.bullet.Bullet;
 import org.joml.Vector2f;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class World {
     private final WorldSize size;
     private final Region[][] regions;
+    private final List<Bullet> bullets;
 
     public World(WorldSize size) {
         this.size = size;
         regions = new Region[size.getSize()][size.getSize()];
+        bullets = new ArrayList<>();
 
         for (int i = 0; i < regions.length; ++i) {
             for (int j = 0; j < regions[i].length; ++j) {
@@ -28,6 +33,14 @@ public class World {
                 action.accept(value);
             }
         }
+    }
+
+    public void addBullet(Bullet bullet) {
+        bullets.add(bullet);
+    }
+
+    public void update(float deltaTime) {
+        bullets.forEach(bullet -> bullet.update(deltaTime));
     }
 
     public enum WorldSize {

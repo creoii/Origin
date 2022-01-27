@@ -30,5 +30,6 @@ public class Game {
     public void update(float deltaTime) {
         player.update(deltaTime);
         activeCharacter.update(deltaTime);
+        world.update(deltaTime);
     }
 }

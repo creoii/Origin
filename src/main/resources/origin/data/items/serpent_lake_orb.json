@@ -1,6 +1,6 @@
 {
-  "id": "serpent_lake_scroll",
-  "type": "spell",
+  "id": "serpent_lake_orb",
+  "type": "orb",
   "rarity": "artifact",
   "stat_bonus": {
     "speed": 4,

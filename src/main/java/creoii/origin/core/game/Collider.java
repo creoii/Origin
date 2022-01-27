@@ -30,14 +30,14 @@ public class Collider {
     }
 
     public Collider expand(int size) {
-        min = min.sub(size, size);
-        max = max.add(size, size);
+        min.sub(size, size);
+        max.add(size, size);
         return this;
     }
 
     public Collider contract(int size) {
-        min = min.add(size, size);
-        max = max.sub(size, size);
+        min.add(size, size);
+        max.sub(size, size);
         return this;
     }
 }

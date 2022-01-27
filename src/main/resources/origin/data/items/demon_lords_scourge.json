@@ -1,0 +1,9 @@
+{
+  "id": "demon_lords_scourge",
+  "type": "gauntlet",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "attack": 8,
+    "armor": 10
+  }
+}

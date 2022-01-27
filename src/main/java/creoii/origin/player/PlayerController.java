@@ -1,5 +1,8 @@
 package creoii.origin.player;
 
+import creoii.origin.bullet.Bullet;
+import creoii.origin.core.game.Game;
+
 public class PlayerController {
     private Player player;
 
@@ -15,6 +18,8 @@ public class PlayerController {
 
     protected void useWeapon() {
         if (weaponUseCooldown <= 0f) {
+            Game.getWorld().addBullet(new Bullet(player).init(player.getSpriteRenderer().getTransform().getPosition()));
+
             weaponUseCooldown = .5f;
         }
     }

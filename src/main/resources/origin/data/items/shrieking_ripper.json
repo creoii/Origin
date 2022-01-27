@@ -1,0 +1,10 @@
+{
+  "id": "shrieking_ripper",
+  "type": "sword",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "attack_speed": 2,
+    "speed": 2,
+    "attack": 2
+  }
+}

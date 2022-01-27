@@ -11,6 +11,7 @@ public abstract class Scene {
     public Camera getCamera() {
         return camera;
     }
+    public Renderer getRenderer() { return renderer; }
 
     public void start() {
         running = true;
