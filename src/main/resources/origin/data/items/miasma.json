@@ -1,0 +1,12 @@
+{
+  "id": "miasma",
+  "type": "accessory",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "health_regen": -3,
+    "mana_regen": 10,
+    "speed": 8,
+    "attack_speed": 4,
+    "armor": 6
+  }
+}

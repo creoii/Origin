@@ -25,12 +25,11 @@ public class Bullet {
         Window.get().getScene().getRenderer().add(spriteRenderer);
         collider = new Collider(spriteRenderer.getTransform().getPosition(), 8);
 
-        direction = MouseUtil.getDirectionVector(parent.getSpriteRenderer().getTransform().getPosition());
+        //direction = MouseUtil.getDirectionVector(parent.getSpriteRenderer().getTransform().getPosition());
         return this;
     }
 
     public void update(float deltaTime) {
-        System.out.println("update");
-        spriteRenderer.getTransform().getPosition().add(direction);
+        //spriteRenderer.getTransform().getPosition().add(direction);
     }
 }

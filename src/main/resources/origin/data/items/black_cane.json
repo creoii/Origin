@@ -1,0 +1,9 @@
+{
+  "id": "black_cane",
+  "type": "staff",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "health_regen": -3,
+    "attack_speed": 3
+  }
+}

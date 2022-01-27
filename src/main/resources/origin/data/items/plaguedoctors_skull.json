@@ -1,0 +1,10 @@
+{
+  "id": "plaguedoctors_skull",
+  "type": "skull",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "health_regen": -3,
+    "armor": 5,
+    "max_health": 60
+  }
+}

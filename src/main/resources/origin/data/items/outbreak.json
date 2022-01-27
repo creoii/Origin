@@ -1,0 +1,9 @@
+{
+  "id": "outbreak",
+  "type": "poison",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "speed": -4,
+    "armor": 4
+  }
+}

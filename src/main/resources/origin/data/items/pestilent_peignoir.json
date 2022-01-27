@@ -1,0 +1,12 @@
+{
+  "id": "pestilent_peignoir",
+  "type": "robe",
+  "rarity": "artifact",
+  "stat_bonus": {
+    "health_regen": -3,
+    "armor": 13,
+    "max_mana": 50,
+    "mana_regen": 5,
+    "attack": 5
+  }
+}
