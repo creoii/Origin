@@ -1,5 +1,6 @@
 package creoii.origin.core.game;
 
+import creoii.origin.core.Main;
 import creoii.origin.core.util.AssetPool;
 import creoii.origin.data.DataLoader;
 import creoii.origin.entity.player.Character;
@@ -16,7 +17,7 @@ public class Game {
         player.createCharacter(DataLoader.CLASSES.getObject("wizard"));
         player.createCharacter(DataLoader.CLASSES.getObject("warrior"));
         activeCharacter = player.getCharacter(0);
-        world = new World(World.WorldSize.MEDIUM);
+        world = new World(World.WorldSize.values()[Main.RANDOM.nextInt(World.WorldSize.values().length)]);
     }
 
     public static Player getPlayer() { return player; }

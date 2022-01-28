@@ -18,7 +18,7 @@ public class PlayerController {
 
     protected void useWeapon() {
         if (weaponUseCooldown <= 0f) {
-            Game.getWorld().addBullet(new Bullet(player).init(player.getSpriteRenderer().getTransform().getPosition()));
+            Game.getWorld().addBullet(new Bullet(Game.getWorld().getBullets().size(), player, 5).init(player.getSpriteRenderer().getTransform().getPosition()));
 
             weaponUseCooldown = .5f;
         }

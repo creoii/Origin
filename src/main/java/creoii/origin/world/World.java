@@ -4,18 +4,21 @@ import creoii.origin.bullet.Bullet;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.function.Consumer;
 
 public class World {
     private final WorldSize size;
     private final Region[][] regions;
-    private final List<Bullet> bullets;
+    private final ConcurrentMap<Integer, Bullet> bullets;
 
     public World(WorldSize size) {
         this.size = size;
         regions = new Region[size.getSize()][size.getSize()];
-        bullets = new ArrayList<>();
+        bullets = new ConcurrentHashMap<Integer, Bullet>();
 
         for (int i = 0; i < regions.length; ++i) {
             for (int j = 0; j < regions[i].length; ++j) {
@@ -35,12 +38,12 @@ public class World {
         }
     }
 
-    public void addBullet(Bullet bullet) {
-        bullets.add(bullet);
-    }
+    public Collection<Bullet> getBullets() { return bullets.values(); }
+    public void addBullet(Bullet bullet) { bullets.put(bullets.size(), bullet); }
+    public void removeBullet(Bullet bullet) { bullets.remove(bullet.getId()); }
 
     public void update(float deltaTime) {
-        bullets.forEach(bullet -> bullet.update(deltaTime));
+        bullets.forEach((id, bullet) -> bullet.update(deltaTime));
     }
 
     public enum WorldSize {
