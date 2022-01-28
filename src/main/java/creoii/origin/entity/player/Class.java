@@ -1,4 +1,4 @@
-package creoii.origin.player;
+package creoii.origin.entity.player;
 
 import com.google.gson.*;
 import creoii.origin.core.util.JsonUtil;

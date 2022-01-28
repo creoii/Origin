@@ -2,8 +2,8 @@ package creoii.origin.core.game;
 
 import creoii.origin.core.util.AssetPool;
 import creoii.origin.data.DataLoader;
-import creoii.origin.player.Character;
-import creoii.origin.player.Player;
+import creoii.origin.entity.player.Character;
+import creoii.origin.entity.player.Player;
 import creoii.origin.world.World;
 
 public class Game {

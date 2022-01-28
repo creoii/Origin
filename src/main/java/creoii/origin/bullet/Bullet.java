@@ -6,7 +6,7 @@ import creoii.origin.core.game.Transform;
 import creoii.origin.core.render.sprite.DynamicSpriteRenderer;
 import creoii.origin.core.render.sprite.Sprite;
 import creoii.origin.core.util.MouseUtil;
-import creoii.origin.player.Player;
+import creoii.origin.entity.player.Player;
 import org.joml.Vector2f;
 
 public class Bullet {

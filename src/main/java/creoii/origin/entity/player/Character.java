@@ -1,4 +1,4 @@
-package creoii.origin.player;
+package creoii.origin.entity.player;
 
 import creoii.origin.core.game.Transform;
 import creoii.origin.data.objects.JsonObjects;

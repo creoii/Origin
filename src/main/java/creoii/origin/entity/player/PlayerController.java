@@ -1,4 +1,4 @@
-package creoii.origin.player;
+package creoii.origin.entity.player;
 
 import creoii.origin.bullet.Bullet;
 import creoii.origin.core.game.Game;

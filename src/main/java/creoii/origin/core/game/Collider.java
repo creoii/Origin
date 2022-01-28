@@ -19,6 +19,12 @@ public class Collider {
         max = new Vector2f(size, size);
     }
 
+    public Collider(Vector2f pos, int xSize, int ySize) {
+        this.pos = pos;
+        min = new Vector2f(-xSize, -ySize);
+        max = new Vector2f(xSize, ySize);
+    }
+
     public Vector2f getPos() { return pos; }
     public void setPos(Vector2f pos) { this.pos = pos; }
 

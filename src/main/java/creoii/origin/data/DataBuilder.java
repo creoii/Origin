@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import creoii.origin.core.Main;
 import creoii.origin.core.util.FileUtil;
 import creoii.origin.item.Item;
-import creoii.origin.player.Class;
+import creoii.origin.entity.player.Class;
 import creoii.origin.tile.Tile;
 
 import java.io.BufferedReader;
