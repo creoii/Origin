@@ -8,12 +8,12 @@ public class DynamicSpriteRenderer extends SpriteRenderer {
     private Transform lastTransform = new Transform(new Vector2f(), new Vector2f());
     private boolean dirty = true;
 
-    public DynamicSpriteRenderer(Transform transform, Vector4f color) {
-        super(transform, color);
+    public DynamicSpriteRenderer(Vector4f color) {
+        super(color);
     }
 
-    public DynamicSpriteRenderer(Transform transform, Sprite sprite) {
-        super(transform, sprite);
+    public DynamicSpriteRenderer(Sprite sprite) {
+        super(sprite);
     }
 
     public boolean isDirty() { return dirty; }

@@ -12,7 +12,7 @@ public class TitleScene extends Scene {
         super.start();
         camera = new Camera(new Vector2f());
 
-        Game.getPlayer().init();
+        Game.getPlayer().init(new Vector2f(625f, 300f));
         renderer.add(Game.getPlayer().getSpriteRenderer());
         Game.getWorld().forEachRegion(region -> {
             for (int i = 0; i < Region.SIZE; ++i) {

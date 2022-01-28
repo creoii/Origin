@@ -28,8 +28,8 @@ public class Game {
     public static World getWorld() { return world; }
 
     public void update(float deltaTime) {
+        world.update(deltaTime);
         player.update(deltaTime);
         activeCharacter.update(deltaTime);
-        world.update(deltaTime);
     }
 }

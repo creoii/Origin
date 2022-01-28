@@ -21,15 +21,14 @@ public class Bullet {
     }
 
     public Bullet init(Vector2f position) {
-        spriteRenderer = new DynamicSpriteRenderer(new Transform(position, new Vector2f(50f, 50f)), new Sprite(null));
+        spriteRenderer = (DynamicSpriteRenderer) new DynamicSpriteRenderer(new Sprite(null)).setTransform(new Transform(position, new Vector2f(50f, 50f)));
         Window.get().getScene().getRenderer().add(spriteRenderer);
         collider = new Collider(spriteRenderer.getTransform().getPosition(), 8);
-
-        //direction = MouseUtil.getDirectionVector(parent.getSpriteRenderer().getTransform().getPosition());
+        direction = MouseUtil.getDirectionVector(position);
         return this;
     }
 
     public void update(float deltaTime) {
-        //spriteRenderer.getTransform().getPosition().add(direction);
+        spriteRenderer.getTransform().getPosition().add(direction);
     }
 }

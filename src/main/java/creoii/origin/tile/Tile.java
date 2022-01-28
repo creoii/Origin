@@ -26,7 +26,7 @@ public class Tile implements Identifiable {
     }
 
     public Tile init(Vector2f position) {
-        sprite = new SpriteRenderer(new Transform(position, new Vector2f(20, 20)), AssetPool.getTileSprite(textures[Main.RANDOM.nextInt(textures.length)].concat(".png")));
+        sprite = new SpriteRenderer(AssetPool.getTileSprite(textures[Main.RANDOM.nextInt(textures.length)].concat(".png"))).setTransform(new Transform(position, new Vector2f(20, 20)));
         return this;
     }
 

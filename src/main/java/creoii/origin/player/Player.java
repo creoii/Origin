@@ -8,13 +8,14 @@ import creoii.origin.core.input.KeyListener;
 import creoii.origin.core.input.MouseListener;
 import creoii.origin.core.render.sprite.DynamicSpriteRenderer;
 import creoii.origin.core.util.AssetPool;
+import creoii.origin.entity.Entity;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public class Player extends Entity {
     private final String name;
     private int characterSlots = 2;
     private List<Character> characters = new ArrayList<>();
@@ -23,13 +24,15 @@ public class Player {
     private PlayerController controller;
 
     public Player(String name) {
+        super(EntityType.PLAYER.getId());
         this.name = name;
         controller = new PlayerController(this);
     }
 
-    public void init() {
-        spriteRenderer = new DynamicSpriteRenderer(new Transform(new Vector2f(600f, 325f), new Vector2f(50f, 50f)), AssetPool.getClassSprite(Game.getActiveCharacter().getCharacterClass().getId()));
-        collider = new Collider(spriteRenderer.getTransform().getPosition(), 10);
+    public void init(Vector2f position) {
+        setTransform(new Transform(position, new Vector2f(50f, 50f)));
+        spriteRenderer = (DynamicSpriteRenderer) new DynamicSpriteRenderer(AssetPool.getClassSprite(Game.getActiveCharacter().getCharacterClass().getId())).setTransform(getTransform());
+        collider = new Collider(getTransform().getPosition(), 10);
     }
 
     public String getName() { return name; }
