@@ -1,7 +1,6 @@
 package creoii.origin.core.input;
 
 import creoii.origin.core.display.Window;
-import creoii.origin.core.display.camera.Camera;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 

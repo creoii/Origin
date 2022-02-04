@@ -1,11 +1,9 @@
 package creoii.origin.entity;
 
 import creoii.origin.core.game.Collider;
-import creoii.origin.core.game.Game;
 import creoii.origin.core.game.Transform;
 import creoii.origin.core.render.sprite.DynamicSpriteRenderer;
 import creoii.origin.core.render.sprite.Sprite;
-import creoii.origin.core.util.AssetPool;
 
 public class Entity {
     private final String id;

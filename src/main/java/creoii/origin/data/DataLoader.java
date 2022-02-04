@@ -13,6 +13,7 @@ public class DataLoader {
     public static final ItemBuilder ITEMS = new ItemBuilder();
     public static final ClassBuilder CLASSES = new ClassBuilder();
     public static final TileBuilder TILES = new TileBuilder();
+    public static final DungeonBuilder DUNGEONS = new DungeonBuilder();
 
     public void loadResources() {
         long startTime = System.nanoTime();

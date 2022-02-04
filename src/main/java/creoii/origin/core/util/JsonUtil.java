@@ -31,4 +31,12 @@ public class JsonUtil {
     public static JsonArray getArray(JsonObject object, String name) {
         return object.has(name) ? object.getAsJsonArray(name) : null;
     }
+
+    public static boolean getBoolean(JsonObject object, String name) {
+        return object.has(name) ? object.get(name).getAsBoolean() : null;
+    }
+
+    public static boolean getBoolean(JsonObject object, String name, boolean fallback) {
+        return object.has(name) ? object.get(name).getAsBoolean() : fallback;
+    }
 }
