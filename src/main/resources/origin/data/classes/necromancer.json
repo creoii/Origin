@@ -1,7 +1,8 @@
 {
-  "id": "priest",
+  "id": "necromancer",
+  "parent": "priest",
   "weapon_type": "wand",
-  "ability_type": "book",
+  "ability_type": "skull",
   "armor_type": "robe",
   "base_stats": {
   },

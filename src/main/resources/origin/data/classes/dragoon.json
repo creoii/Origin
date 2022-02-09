@@ -1,7 +1,8 @@
 {
-  "id": "rogue",
-  "weapon_type": "dagger",
-  "ability_type": "cloak",
+  "id": "dragoon",
+  "parent": "ninja",
+  "weapon_type": "katana",
+  "ability_type": "shout",
   "armor_type": "light_armor",
   "base_stats": {
   },

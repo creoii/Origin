@@ -16,40 +16,39 @@ public class Class implements Identifiable {
     private final StatData baseStats;
     private final StatData minStatIncrease;
     private final StatData maxStatIncrease;
+    private final StatData maxStats;
 
-    public Class(String id, String parent, Item.ItemType weaponType, Item.ItemType abilityType, Item.ItemType armorType, StatData baseStats, StatData minStatIncrease, StatData maxStatIncrease) {
+    public Class(String id, String parent, Item.ItemType weaponType, Item.ItemType abilityType, Item.ItemType armorType, StatData baseStats, StatData minStatIncrease, StatData maxStatIncrease, StatData maxStats) {
         this.id = id;
         this.parent = parent;
         slotTypes = new Item.ItemType[]{weaponType, abilityType, armorType, Item.ItemType.ACCESSORY};
         this.baseStats = baseStats;
         this.minStatIncrease = minStatIncrease;
         this.maxStatIncrease = maxStatIncrease;
+        this.maxStats = maxStats;
     }
 
-    public Class(String id, Item.ItemType weaponType, Item.ItemType abilityType, Item.ItemType armorType, StatData baseStats, StatData minStatIncrease, StatData maxStatIncrease) {
-        this(id, null, weaponType, abilityType, armorType, baseStats, minStatIncrease, maxStatIncrease);
+    public Class(String id, Item.ItemType weaponType, Item.ItemType abilityType, Item.ItemType armorType, StatData baseStats, StatData minStatIncrease, StatData maxStatIncrease, StatData maxStats) {
+        this(id, null, weaponType, abilityType, armorType, baseStats, minStatIncrease, maxStatIncrease, maxStats);
     }
 
     @Override
     public String getId() {
         return id;
     }
-
     public Item.ItemType[] getSlotTypes() {
         return slotTypes;
     }
-
     public StatData getBaseStats() {
         return baseStats;
     }
-
     public StatData getMinStatIncrease() {
         return minStatIncrease;
     }
-
     public StatData getMaxStatIncrease() {
         return maxStatIncrease;
     }
+    public StatData getMaxStats() { return maxStats; }
 
     public static class Serializer implements JsonDeserializer<Class>, JsonSerializer<Class> {
         @Override
@@ -63,10 +62,11 @@ public class Class implements Identifiable {
                 StatData baseStats = StatData.deserialize(object, "base_stats");
                 StatData minStatIncrease = StatData.deserialize(object, "min_stat_increase");
                 StatData maxStatIncrease = StatData.deserialize(object, "max_stat_increase");
+                StatData maxStats = StatData.deserialize(object, "max_stats");
                 if (object.has("parent")) {
                     String parent = JsonUtil.getString(object, "parent");
-                    return new Class(id, parent, weaponType, abilityType, armorType, baseStats, minStatIncrease, maxStatIncrease);
-                } else return new Class(id, weaponType, abilityType, armorType, baseStats, minStatIncrease, maxStatIncrease);
+                    return new Class(id, parent, weaponType, abilityType, armorType, baseStats, minStatIncrease, maxStatIncrease, maxStats);
+                } else return new Class(id, weaponType, abilityType, armorType, baseStats, minStatIncrease, maxStatIncrease, maxStats);
             }
             return null;
         }
@@ -81,6 +81,7 @@ public class Class implements Identifiable {
             object.add("base_stats", context.serialize(src.getBaseStats()));
             object.add("min_stat_increase", context.serialize(src.getMinStatIncrease()));
             object.add("max_stat_increase", context.serialize(src.getMaxStatIncrease()));
+            object.add("max_stats", context.serialize(src.getMaxStats()));
             return object;
         }
     }

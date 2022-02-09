@@ -1,7 +1,8 @@
 {
-  "id": "priest",
-  "weapon_type": "wand",
-  "ability_type": "book",
+  "id": "bard",
+  "parent": "archer",
+  "weapon_type": "bow",
+  "ability_type": "instrument",
   "armor_type": "robe",
   "base_stats": {
   },

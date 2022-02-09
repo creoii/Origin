@@ -1,0 +1,15 @@
+{
+  "id": "barbarian",
+  "parent": "warrior",
+  "weapon_type": "sword",
+  "ability_type": "mace",
+  "armor_type": "heavy_armor",
+  "base_stats": {
+  },
+  "min_stat_increase": {
+  },
+  "max_stat_increase": {
+  },
+  "max_stats": {
+  }
+}

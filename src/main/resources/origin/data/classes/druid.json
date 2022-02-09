@@ -1,7 +1,8 @@
 {
-  "id": "rogue",
-  "weapon_type": "dagger",
-  "ability_type": "cloak",
+  "id": "druid",
+  "parent": "wizard",
+  "weapon_type": "staff",
+  "ability_type": "bloom",
   "armor_type": "light_armor",
   "base_stats": {
   },

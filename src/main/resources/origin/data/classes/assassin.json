@@ -1,7 +1,8 @@
 {
-  "id": "rogue",
+  "id": "assassin",
+  "parent": "rogue",
   "weapon_type": "dagger",
-  "ability_type": "cloak",
+  "ability_type": "poison",
   "armor_type": "light_armor",
   "base_stats": {
   },

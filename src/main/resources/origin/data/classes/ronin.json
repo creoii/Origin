@@ -1,7 +1,8 @@
 {
-  "id": "rogue",
-  "weapon_type": "dagger",
-  "ability_type": "cloak",
+  "id": "ronin",
+  "parent": "ninja",
+  "weapon_type": "katana",
+  "ability_type": "sheath",
   "armor_type": "light_armor",
   "base_stats": {
   },

@@ -1,7 +1,8 @@
 {
-  "id": "rogue",
-  "weapon_type": "dagger",
-  "ability_type": "cloak",
+  "id": "ranger",
+  "parent": "archer",
+  "weapon_type": "bow",
+  "ability_type": "quiver",
   "armor_type": "light_armor",
   "base_stats": {
   },

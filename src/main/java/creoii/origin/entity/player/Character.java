@@ -1,10 +1,13 @@
 package creoii.origin.entity.player;
 
+import creoii.origin.core.Main;
 import creoii.origin.core.game.Transform;
 import creoii.origin.data.objects.JsonObjects;
 import org.joml.Vector2f;
 
 public class Character {
+    public static final int MAX_LEVEL = 40;
+
     private Player player;
     private Class clazz;
     private float health;
@@ -31,13 +34,20 @@ public class Character {
 
     public void incrementLevel() {
         ++level;
+        currentStats.addRandomBetween(clazz.getMinStatIncrease(), clazz.getMaxStatIncrease(), clazz.getMaxStats());
     }
 
     public void addXp(int amount) {
-        xp += amount;
+        if (level < MAX_LEVEL) {
+            xp += amount;
+
+            if (xp > Math.pow(level / .1, 2)) {
+                incrementLevel();
+            }
+        }
     }
 
     public void update(float deltaTime) {
-
+        addXp(Main.RANDOM.nextInt(25) + 1);
     }
 }

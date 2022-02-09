@@ -1,7 +1,8 @@
 {
-  "id": "rogue",
+  "id": "trickster",
+  "parent": "rogue",
   "weapon_type": "dagger",
-  "ability_type": "cloak",
+  "ability_type": "prism",
   "armor_type": "light_armor",
   "base_stats": {
   },

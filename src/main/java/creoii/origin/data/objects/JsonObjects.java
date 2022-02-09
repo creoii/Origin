@@ -2,7 +2,9 @@ package creoii.origin.data.objects;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import creoii.origin.core.Main;
 import creoii.origin.core.util.JsonUtil;
+import creoii.origin.core.util.MathUtil;
 
 public class JsonObjects {
     public static class StatData {
@@ -28,15 +30,26 @@ public class JsonObjects {
         public int getAttack() { return attack; }
         public int getArmor() { return armor; }
 
-        public void add(StatData other) {
-            maxHealth += other.maxHealth;
-            maxMana += other.maxMana;
-            speed += other.speed;
-            attackSpeed += other.attackSpeed;
-            healthRegen += other.healthRegen;
-            manaRegen += other.manaRegen;
-            attack += other.attack;
-            armor += other.armor;
+        public void add(StatData add, StatData max) {
+            maxHealth = MathUtil.addWithCeil(maxHealth, add.maxHealth, max.maxHealth);
+            maxMana = MathUtil.addWithCeil(maxMana, add.maxMana, max.maxMana);
+            speed = MathUtil.addWithCeil(speed, add.speed, max.speed);
+            attackSpeed = MathUtil.addWithCeil(attack, add.attackSpeed, max.attackSpeed);
+            healthRegen = MathUtil.addWithCeil(healthRegen, add.healthRegen, max.healthRegen);
+            manaRegen = MathUtil.addWithCeil(manaRegen, add.manaRegen, max.manaRegen);
+            attack = MathUtil.addWithCeil(attack, add.attack, max.attack);
+            armor = MathUtil.addWithCeil(armor, add.armor, max.armor);
+        }
+
+        public void addRandomBetween(StatData minimum, StatData maximum, StatData max) {
+            maxHealth = MathUtil.addWithCeil(maxHealth, Main.RANDOM.nextInt(maximum.maxHealth) + minimum.maxHealth, max.maxHealth);
+            maxMana = MathUtil.addWithCeil(maxMana, Main.RANDOM.nextInt(maximum.maxMana) + minimum.maxMana, max.maxMana);
+            speed = MathUtil.addWithCeil(speed, Main.RANDOM.nextInt(maximum.speed) + minimum.speed, max.speed);
+            attackSpeed = MathUtil.addWithCeil(attackSpeed, Main.RANDOM.nextInt(maximum.attackSpeed) + minimum.attackSpeed, max.attackSpeed);
+            healthRegen = MathUtil.addWithCeil(healthRegen, Main.RANDOM.nextInt(maximum.healthRegen) + minimum.healthRegen, max.healthRegen);
+            manaRegen = MathUtil.addWithCeil(manaRegen, Main.RANDOM.nextInt(maximum.manaRegen) + minimum.manaRegen, max.manaRegen);
+            attack = MathUtil.addWithCeil(attack, Main.RANDOM.nextInt(maximum.attack) + minimum.attack, max.attack);
+            armor = MathUtil.addWithCeil(armor, Main.RANDOM.nextInt(maximum.armor) + minimum.armor, max.armor);
         }
 
         public static StatData deserialize(JsonObject object, String name) {

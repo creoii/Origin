@@ -6,7 +6,33 @@
   "base_stats": {
   },
   "min_stat_increase": {
+    "max_health": 10,
+    "max_mana": 10,
+    "speed": 2,
+    "attack_speed": 2,
+    "health_regen": 3,
+    "mana_regen": 3,
+    "attack": 2,
+    "armor": 1
   },
   "max_stat_increase": {
+    "max_health": 10,
+    "max_mana": 10,
+    "speed": 2,
+    "attack_speed": 2,
+    "health_regen": 3,
+    "mana_regen": 3,
+    "attack": 2,
+    "armor": 1
+  },
+  "max_stats": {
+    "max_health": 800,
+    "max_mana": 350,
+    "speed": 50,
+    "attack_speed": 60,
+    "health_regen": 60,
+    "mana_regen": 45,
+    "attack": 50,
+    "armor": 35
   }
 }

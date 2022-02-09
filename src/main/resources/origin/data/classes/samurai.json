@@ -1,8 +1,9 @@
 {
-  "id": "ninja",
+  "id": "samurai",
+  "parent": "ninja",
   "weapon_type": "katana",
-  "ability_type": "star",
-  "armor_type": "light_armor",
+  "ability_type": "banner",
+  "armor_type": "heavy_armor",
   "base_stats": {
   },
   "min_stat_increase": {

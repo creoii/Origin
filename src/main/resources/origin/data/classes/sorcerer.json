@@ -1,7 +1,8 @@
 {
-  "id": "priest",
-  "weapon_type": "wand",
-  "ability_type": "book",
+  "id": "sorcerer",
+  "parent": "wizard",
+  "weapon_type": "staff",
+  "ability_type": "scepter",
   "armor_type": "robe",
   "base_stats": {
   },
